@@ -121,6 +121,24 @@
     text-align: center;
     padding: 40px 20px;
 }
+@media print {
+    /* প্রিন্ট করার সময় সব কিছু লুকাও */
+    body * { visibility: hidden; }
+    /* শুধু প্রিন্ট এরিয়া এবং তার ভেতরের সব দেখাও */
+    #printArea, #printArea * { visibility: visible; }
+    /* প্রিন্ট এরিয়াকে একদম উপরে এবং ফুল স্ক্রিনে নিয়ে আসো */
+    #printArea { 
+        position: absolute; 
+        left: 0; 
+        top: 0; 
+        width: 100%; 
+        border: none; 
+        padding: 0; 
+        margin: 0;
+    }
+    /* বাটনগুলো প্রিন্টে দেখানোর দরকার নেই */
+    .no-print { display: none !important; }
+}
     </style>
 </head>
 <body>
@@ -132,6 +150,11 @@
         <h1>PURANGHAT COLLEGE</h1>
         <p>TAHIRPUR, SUNAMGANJ | ESTABLISHED: 2019</p>
     </div>
+</div>
+<div style="background: #ff9800; color: white; padding: 10px; font-weight: bold; overflow: hidden;">
+    <marquee behavior="scroll" direction="left" scrollamount="6">
+        নোটিশ: ২০২৬ শিক্ষাবর্ষের অনলাইন ভর্তি চলছে। ভর্তির শেষ তারিখ: ৩০ আগষ্ট ২০২৬। প্রয়োজনীয় কাগজপত্র সাথে আনুন।
+    </marquee>
 </div>
 
 <div class="container">
@@ -206,7 +229,26 @@
                     </select>
                 </div>
             </div>
-
+            <div class="row">
+    <div class="form-group">
+        <label>SSC GPA:</label>
+        <input type="number" id="gpa" step="0.01" min="1.00" max="5.00" placeholder="e.g. 5.00" required>
+    </div>
+    <div class="form-group">
+    <label>Blood Group:</label>
+    <select id="bloodGroup" required>
+        <option value="">-- Select Blood Group --</option>
+        <option>A+</option>
+        <option>A-</option>
+        <option>B+</option>
+        <option>B-</option>
+        <option>O+</option>
+        <option>O-</option>
+        <option>AB+</option>
+        <option>AB-</option>
+    </select>
+</div>
+</div>
             <div class="row">
                 <div class="form-group">
                     <label>Applied Group:</label>
@@ -228,7 +270,23 @@
                         </select>
                 </div>
             </div>
-
+    <div class="form-group">
+        <label>Select 4th Subject (Optional):</label>
+        <select id="fourthSubject" required>
+            <option value="">-- Choose Subject --</option>
+            <option>Agriculture Studies</option>
+            <option>Higher Math</option>
+            <option>Biology</option>
+            <option>Geography</option>
+            <option>Civics & Good Governance</option>
+        </select>
+    </div>
+<div class="row">
+    <div class="form-group">
+        <label>Upload Student Photo:</label>
+        <input type="file" id="photo" accept="image/*" required>
+    </div>
+</div>
             <div class="btn-container">
                 <button type="button" class="btn" onclick="submitApplication()">Confirm Submission</button>
             </div>
@@ -242,8 +300,8 @@
 </div>
 
 <script>
-    // 1. Firebase Configuration (MUST PASTE YOUR DATA HERE)
-const firebaseConfig = {
+    // ১. Firebase Configuration
+    const firebaseConfig = {
         apiKey: "AIzaSyB9hqyxFgrcn6Pu1AM3h7n15f6UMuuaWyk",
         authDomain: "puranghatcollege-1faa9.firebaseapp.com",
         projectId: "puranghatcollege-1faa9",
@@ -257,44 +315,83 @@ const firebaseConfig = {
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // 2. Data Submission Function
+    // ২. Data Submission Function
     function submitApplication() {
         const form = document.getElementById('admissionForm');
         
-        // Basic Validation
-        if(!form.checkValidity()) {
-            alert("সবগুলো ঘর সঠিক তথ্য দিয়ে পূরণ করুন!");
-            return;
+        // ১. ফরমের ভ্যালিডেশন চেক (এটি নিশ্চিত করবে সব ঘর পূরণ হয়েছে কি না)
+        if(!form.checkValidity()) { 
+            form.reportValidity(); // এটি কোন ঘরটি খালি তা ইউজারকে দেখিয়ে দিবে
+            return; 
         }
 
-        // Collecting Data
-        const formData = {
-            student_name: document.getElementById('sname').value,
-            mobile: document.getElementById('mobile').value,
-            father_name: document.getElementById('fname').value,
-            mother_name: document.getElementById('mname').value,
-            dob: document.getElementById('dob').value,
-            email: document.getElementById('email').value,
-            ssc_roll: document.getElementById('roll').value,
-            ssc_reg: document.getElementById('reg').value,
-            board: document.getElementById('board').value,
-            passing_year: document.getElementById('passYear').value,
-            group: document.getElementById('group').value,
-            district: document.getElementById('district').value,
-            submitted_at: new Date().toLocaleString()
-        };
+        const photoFile = document.getElementById('photo').files[0];
+        
+        if (photoFile) {
+            // ২. ছবির সাইজ চেক (২ এমবি এর বেশি হলে সতর্ক করবে)
+            if(photoFile.size > 2 * 1024 * 1024) {
+                alert("ছবি অনেক বড়! দয়া করে ২ এমবি এর নিচের ছবি আপলোড করুন।");
+                return;
+            }
 
-        // Saving to Firebase
-        db.ref('admissions/' + formData.ssc_roll).set(formData)
-        .then(() => {
-            alert("অভিনন্দন! আপনার আবেদনটি সফলভাবে জমা হয়েছে।");
-            form.reset();
-        })
-        .catch((error) => {
-            alert("Submission failed: " + error.message);
-        });
+            const reader = new FileReader();
+            reader.readAsDataURL(photoFile); // আগে রিড শুরু করা ভালো
+
+            reader.onloadend = function() {
+                const formData = {
+                    student_name: document.getElementById('sname').value,
+                    mobile: document.getElementById('mobile').value,
+                    father_name: document.getElementById('fname').value,
+                    mother_name: document.getElementById('mname').value,
+                    dob: document.getElementById('dob').value,
+                    email: document.getElementById('email').value,
+                    ssc_roll: document.getElementById('roll').value,
+                    ssc_reg: document.getElementById('reg').value,
+                    board: document.getElementById('board').value,
+                    passing_year: document.getElementById('passYear').value,
+                    ssc_gpa: document.getElementById('gpa').value,
+                    blood_group: document.getElementById('bloodGroup').value,
+                    group: document.getElementById('group').value,
+                    district: document.getElementById('district').value,
+                    fourth_subject: document.getElementById('fourthSubject').value,
+                    student_photo: reader.result, 
+                    submitted_at: new Date().toLocaleString()
+                };
+
+                // Firebase-এ ডাটা সেভ করা
+                db.ref('admissions/' + formData.ssc_roll).set(formData)
+                .then(() => {
+                    // অভিনন্দন মেসেজ
+                    document.querySelector('.container').innerHTML = `
+                        <div class="form-card" id="printArea" style="text-align: center;">
+                            <h2 style="color: green; border:none;">আবেদন সফল হয়েছে!</h2>
+                            <p>পুরানঘাট কলেজ অনলাইন ভর্তি পোর্টাল - ২০২৬</p>
+                            <hr>
+                            <div style="text-align: left; display: inline-block; width: 100%; max-width: 400px; line-height: 2;">
+                                <p><b>শিক্ষার্থীর নাম:</b> ${formData.student_name}</p>
+                                <p><b>রোল নম্বর:</b> ${formData.ssc_roll}</p>
+                                <p><b>মোবাইল:</b> ${formData.mobile}</p>
+                                <p><b>গ্রুপ:</b> ${formData.group}</p>
+                                <p><b>রক্তের গ্রুপ:</b> ${formData.blood_group}</p>
+                            </div>
+                            <hr>
+                            <div class="no-print">
+                                <button onclick="window.print()" class="btn" style="padding: 12px 30px; font-size: 16px;">Print / Save as PDF</button>
+                                <button onclick="window.location.reload()" class="btn" style="background:#777; padding: 12px 30px; font-size: 16px; margin-top: 10px;">নতুন আবেদন</button>
+                            </div>
+                        </div>
+                    `;
+                    window.scrollTo(0,0);
+                })
+                .catch((error) => {
+                    alert("Firebase Error: " + error.message);
+                });
+            };
+        } else {
+            alert("অনুগ্রহ করে একটি ছবি আপলোড করুন।");
+        }
     }
 </script>
 
 </body>
-    </html>
+</html>
