@@ -477,54 +477,6 @@ function updateUpazila() {
         });
     }
 }
-    function updatePostOffice() {
-    const postCodeInput = document.getElementById("postCode").value;
-    const postOfficeInput = document.getElementById("postOffice");
-
-    // কিছু উদাহরণ পোস্ট কোড ডাটা (আপনি এখানে আরো যোগ করতে পারেন)
-    const postData = {
-    // ঢাকা বিভাগ
-    "1000": "Dhaka GPO", "1100": "Dhaka Sadar HO", "1203": "Dhaka Sadar", "1204": "Dhaka Sadar",
-    "1205": "New Market", "1206": "Dhaka Cantonment", "1207": "Mohammadpur", "1208": "Dhaka Polytechnic",
-    "1209": "Jigatala", "1211": "Posta", "1212": "Gulshan", "1213": "Banani", "1214": "Basabo",
-    "1215": "Tejgaon", "1216": "Mirpur", "1217": "Shantinagar", "1219": "Khilgaon", "1225": "Uttara",
-    "1229": "Khilkhet", "1230": "Uttara", "1310": "Keraniganj", "1311": "Dhaka Jute Mills",
-    "1312": "Ati", "1313": "Kalatia", "1320": "Nawabganj", "1330": "Joypara", "1340": "Savar",
-    "1341": "Dairy Farm", "1344": "Savar Cantonment", "1350": "Dhamrai", "1360": "Demra",
-
-    // সুনামগঞ্জ ও সিলেট বিভাগ
-    "3000": "Sylhet Sadar", "3080": "Sunamganj Sadar", "3081": "Pagla", "3082": "Patharia",
-    "3010": "Sylhet Bimanbondar", "3012": "Jalalabad", "3100": "Sylhet GPO", "3200": "Moulvibazar Sadar",
-    "3300": "Habiganj Sadar", "3086": "Chhatak", "3087": "Chhatak Cement Factory", "3089": "Moinpur",
-    "3090": "Jagannathpur", "3091": "Sajhalpur",
-
-    // চট্টগ্রাম বিভাগ
-    "4000": "Chittagong GPO", "4100": "Chittagong Sadar", "4202": "Pahartali", "4203": "Custom House",
-    "4204": "Patenga", "4205": "Chittagong Airport", "4208": "Bayezid Bostami", "4209": "Chandgaon",
-    "4210": "Chittagong University", "4211": "Faujdarhat", "4212": "Halishahar", "4700": "Cox's Bazar Sadar",
-
-    // রাজশাহী বিভাগ
-    "6000": "Rajshahi GPO", "6100": "Rajshahi Sadar", "6201": "Rajshahi Court", "6202": "Rajshahi University",
-    "6203": "Kazla", "6204": "Sapura", "6205": "Rajshahi Sugar Mills", "5800": "Bogra Sadar",
-    "5801": "Bogra Cantonment", "6400": "Natore Sadar", "6600": "Pabna Sadar",
-
-    // খুলনা ও বরিশাল বিভাগ
-    "9000": "Khulna GPO", "9100": "Khulna Sadar", "9201": "Khulna Shipyard", "9202": "Khulna University",
-    "9203": "Daulatpur", "8200": "Barishal Sadar", "8300": "Bhola Sadar", "9300": "Bagerhat Sadar",
-
-    // রংপুর ও অন্যান্য
-    "5400": "Rangpur Sadar", "5401": "Rangpur University", "5402": "Rangpur Medical College",
-    "5200": "Dinajpur Sadar", "2200": "Mymensingh Sadar", "2201": "Agricultural University",
-    "3400": "Brahmanbaria Sadar", "3500": "Comilla Sadar", "3501": "Comilla Cantonment"
-};
-
-    // যদি টাইপ করা কোডটি লিস্টে থাকে, তবে নাম দেখাবে
-    if (postData[postCodeInput]) {
-        postOfficeInput.value = postData[postCodeInput];
-    } else {
-        postOfficeInput.value = ""; // মিল না থাকলে খালি থাকবে
-    }
-}
     function submitApplication() {
         const form = document.getElementById('admissionForm');
         
