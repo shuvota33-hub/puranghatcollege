@@ -335,6 +335,15 @@
         <option value="">Select District First</option>
     </select>
                 </div>
+                <div class="form-group">
+    <label>Post Code</label>
+    <input type="text" id="postCode" placeholder="যেমন: ৩০৮০" onkeyup="updatePostOffice()">
+</div>
+
+<div class="form-group">
+    <label>Post Office</label>
+    <input type="text" id="postOffice" readonly placeholder="পোস্ট অফিসের নাম অটো আসবে">
+</div>
             </div>
     <div class="form-group">
         <label>Select 4th Subject (Optional):</label>
@@ -389,15 +398,119 @@ function updateUpazila() {
 
     // উপজেলার ডাটা অবজেক্ট
     const upazilaData = {
-        "Sunamganj": [
-            "Sunamganj Sadar", "Shantiganj", "Chhatak", "Jagannathpur", 
-            "Doarabazar", "Bishwambarpur", "Tahirpur", "Dharmapasha", 
-            "Jamalganj", "Dirai", "Shalla", "Madhyanagar"
-        ],
-        // আপনি চাইলে এখানে অন্য জেলার উপজেলার লিস্টও একইভাবে যোগ করতে পারেন
-        "Dhaka": ["Dhamrai", "Dohar", "Keraniganj", "Nawabganj", "Savar"]
-    };
+    "Bagerhat": ["Bagerhat Sadar", "Chitalmari", "Fakirhat", "Kachua", "Mollahat", "Mongla", "Morrelganj", "Rampal", "Sarankhola"],
+    "Bandarban": ["Bandarban Sadar", "Ali Kadam", "Lama", "Naikhongchhari", "Rowangchhari", "Ruma", "Thanchi"],
+    "Barguna": ["Barguna Sadar", "Amtali", "Bamna", "Betagi", "Patharghata", "Taltali"],
+    "Barishal": ["Barishal Sadar", "Agailjhara", "Babuganj", "Bakerganj", "Banaripara", "Gaurnadi", "Hizla", "Mehendiganj", "Muladi", "Wazirpur"],
+    "Bhola": ["Bhola Sadar", "Burhanuddin", "Char Fasson", "Daulatkhan", "Lalmohan", "Manpura", "Tazumuddin"],
+    "Bogra": ["Bogra Sadar", "Adamdighi", "Dhunat", "Dhupchanchia", "Gabtali", "Kahaloo", "Nandigram", "Sariakandi", "Sherpur", "Shajahanpur", "Sonatala", "Sibatganj"],
+    "Brahmanbaria": ["Brahmanbaria Sadar", "Akhaura", "Ashuganj", "Bancharampur", "Bijoynagar", "Kasba", "Nabinagar", "Nasirnagar", "Sarail"],
+    "Chandpur": ["Chandpur Sadar", "Faridganj", "Haimchar", "Haziganj", "Kachua", "Matlab Dakshin", "Matlab Uttar", "Shahrasti"],
+    "Chapainawabganj": ["Chapainawabganj Sadar", "Bholahat", "Gomastapur", "Nachole", "Shibganj"],
+    "Chattogram": ["Anwara", "Banshkhali", "Boalkhali", "Chandanaish", "Fatikchhari", "Hathazari", "Karnaphuli", "Lohagara", "Mirsharai", "Patiya", "Rangunia", "Raojan", "Sandwip", "Satkania", "Sitakunda"],
+    "Chuadanga": ["Chuadanga Sadar", "Alamdanga", "Damurhuda", "Jibannagar"],
+    "Cumilla": ["Cumilla Sadar", "Barura", "Brahmanpara", "Burichang", "Chandina", "Chauddagram", "Daudkandi", "Debidwar", "Homna", "Laksam", "Lalmai", "Meghna", "Monohargonj", "Muradnagar", "Nangalkot", "Titas"],
+    "Cox's Bazar": ["Cox's Bazar Sadar", "Chakaria", "Kutubdia", "Maheshkhali", "Pekua", "Ramu", "Teknaf", "Ukhia"],
+    "Dhaka": ["Dhamrai", "Dohar", "Keraniganj", "Nawabganj", "Savar"],
+    "Dinajpur": ["Dinajpur Sadar", "Biral", "Birganj", "Birampur", "Bochaganj", "Chirirbandar", "Fullbari", "Ghoraghat", "Hakimpur", "Kaharole", "Khansama", "Nawabganj", "Parbatipur"],
+    "Faridpur": ["Faridpur Sadar", "Alfadanga", "Bhanga", "Boalmari", "Charbhadrasan", "Madhukhali", "Nagarkanda", "Sadarpur", "Saltha"],
+    "Feni": ["Feni Sadar", "Chhagalnaiya", "Daganbhuiyan", "Fulgazi", "Parshuram", "Sonagazi"],
+    "Gaibandha": ["Gaibandha Sadar", "Gobindaganj", "Palashbari", "Phulchhari", "Sadullapur", "Saghata", "Sundarganj"],
+    "Gazipur": ["Gazipur Sadar", "Kaliakair", "Kaliganj", "Kapasia", "Sreepur"],
+    "Gopalganj": ["Gopalganj Sadar", "Kashiani", "Kotalipara", "Muksudpur", "Tungipara"],
+    "Habiganj": ["Habiganj Sadar", "Ajmiriganj", "Bahubal", "Baniachong", "Chunarughat", "Lakhai", "Madhabpur", "Nabiganj", "Sayestaganj"],
+    "Jamalpur": ["Jamalpur Sadar", "Baksiganj", "Dewanganj", "Islampur", "Madarganj", "Melandaha", "Sarishabari"],
+    "Jashore": ["Jashore Sadar", "Abhaynagar", "Bagherpara", "Chaugachha", "Jhikargachha", "Keshabpur", "Manirampur", "Sharsha"],
+    "Jhalokati": ["Jhalokati Sadar", "Kathalia", "Nalchity", "Rajapur"],
+    "Jhenaidah": ["Jhenaidah Sadar", "Harinakunda", "Kaliganj", "Kotchandpur", "Maheshpur", "Shailkupa"],
+    "Joypurhat": ["Joypurhat Sadar", "Akkelpur", "Kalai", "Khetlal", "Panchbibi"],
+    "Khagrachari": ["Khagrachari Sadar", "Dighinala", "Guimara", "Lakshmichhari", "Mahalchhari", "Manikchhari", "Matiranga", "Panchhari", "Ramgarh"],
+    "Khulna": ["Batiaghata", "Dacope", "Dumuria", "Dighalia", "Koyra", "Paikgachha", "Phultala", "Rupsha", "Terokhada"],
+    "Kishoreganj": ["Kishoreganj Sadar", "Astagram", "Bajitpur", "Bhairab", "Hossainpur", "Itna", "Karimganj", "Katiadi", "Kuliarchar", "Mithamain", "Nikli", "Pakundia", "Tarail"],
+    "Kurigram": ["Kurigram Sadar", "Bhurungamari", "Char Rajibpur", "Chilmari", "Nageshwari", "Phulbari", "Rajarhat", "Rowmari", "Ulipur"],
+    "Kushtia": ["Kushtia Sadar", "Bheramara", "Daulatpur", "Khoksa", "Kumarkhali", "Mirpur"],
+    "Lakshmipur": ["Lakshmipur Sadar", "Kamalnagar", "Raipur", "Ramganj", "Ramgati"],
+    "Lalmonirhat": ["Lalmonirhat Sadar", "Aditmari", "Hatibandha", "Kaliganj", "Patgram"],
+    "Madaripur": ["Madaripur Sadar", "Kalkini", "Rajoir", "Shibchar"],
+    "Magura": ["Magura Sadar", "Mohammadpur", "Shalakha", "Sreepur"],
+    "Manikganj": ["Manikganj Sadar", "Daulatpur", "Ghiror", "Harirampur", "Saturia", "Shivalaya", "Singair"],
+    "Meherpur": ["Meherpur Sadar", "Gangni", "Mujibnagar"],
+    "Moulvibazar": ["Moulvibazar Sadar", "Barlekha", "Juri", "Kamalganj", "Kulaura", "Rajnagar", "Sreemangal"],
+    "Munshiganj": ["Munshiganj Sadar", "Gajaria", "Lauhajang", "Sirajdikhan", "Sreenagar", "Tongibari"],
+    "Mymensingh": ["Mymensingh Sadar", "Bhaluka", "Dhobaura", "Fulbaria", "Gaffargaon", "Gauripur", "Haluaghat", "Ishwarganj", "Muktagachha", "Nandail", "Phulpur", "Trishal", "Tara Khanda"],
+    "Naogaon": ["Naogaon Sadar", "Atrai", "Badalgachhi", "Dhamoirhat", "Manda", "Mahadebpur", "Niamatpur", "Patnitala", "Porsha", "Raninagar", "Sapahar"],
+    "Narail": ["Narail Sadar", "Kalia", "Lohagara"],
+    "Narayanganj": ["Narayanganj Sadar", "Araihazar", "Bandar", "Rupganj", "Sonargaon"],
+    "Narsingdi": ["Narsingdi Sadar", "Belabo", "Monohardi", "Palash", "Raipura", "Shibpur"],
+    "Natore": ["Natore Sadar", "Bagatipara", "Baraigram", "Gurudaspur", "Lalpur", "Naldanga", "Singra"],
+    "Netrokona": ["Netrokona Sadar", "Atpara", "Barhatta", "Durgapur", "Khaliajuri", "Kalmakanda", "Kendua", "Madan", "Mohanganj", "Purbadhala"],
+    "Nilphamari": ["Nilphamari Sadar", "Dimla", "Domar", "Jaldhaka", "Kishoreganj", "Saidpur"],
+    "Noakhali": ["Noakhali Sadar", "Begumganj", "Chatkhil", "Companyganj", "Hatiya", "Kabirhat", "Senbagh", "Sonaimuri", "Subarnachar"],
+    "Pabna": ["Pabna Sadar", "Atgharia", "Bera", "Bhangura", "Chatmohar", "Faridpur", "Ishwardi", "Santhia", "Sujanagar"],
+    "Panchagarh": ["Panchagarh Sadar", "Atwari", "Boda", "Debiganj", "Tetulia"],
+    "Patuakhali": ["Patuakhali Sadar", "Bauphal", "Dashmina", "Dumki", "Galachipa", "Kalapara", "Mirzaganj", "Rangabali"],
+    "Pirojpur": ["Pirojpur Sadar", "Bhandaria", "Kawkhali", "Mathbaria", "Nazirpur", "Nesarabad (Swarupkati)", "Indurkani"],
+    "Rajbari": ["Rajbari Sadar", "Baliakandi", "Goalandaghat", "Kalukhali", "Pangsha"],
+    "Rajshahi": ["Bagha", "Bagmara", "Charghat", "Durgapur", "Godagari", "Mohanpur", "Paba", "Puthia", "Tanore"],
+    "Rangamati": ["Rangamati Sadar", "Bagaichhari", "Barkal", "Belaichhari", "Jurachhari", "Kaptai", "Kawkhali", "Langadu", "Naniyachar", "Rajasthali"],
+    "Rangpur": ["Rangpur Sadar", "Badarganj", "Gangachhara", "Kaunia", "Mithapukur", "Pirgachha", "Pirganj", "Taraganj"],
+    "Satkhira": ["Satkhira Sadar", "Assasuni", "Debhata", "Kalaroa", "Kaliganj", "Shyamnagar", "Tala"],
+    "Shariatpur": ["Shariatpur Sadar", "Bhedarganj", "Damudya", "Gosairhat", "Naria", "Zajira"],
+    "Sherpur": ["Sherpur Sadar", "Jhenaigati", "Nakla", "Nalitabari", "Sreebardi"],
+    "Sirajganj": ["Sirajganj Sadar", "Belkuchi", "Chauhali", "Kamarkhanda", "Kazipur", "Raiganj", "Shahjadpur", "Tarash", "Ullahpara"],
+    "Sunamganj": ["Sunamganj Sadar", "Shantiganj", "Chhatak", "Jagannathpur", "Doarabazar", "Bishwambarpur", "Tahirpur", "Dharmapasha", "Jamalganj", "Dirai", "Shalla", "Madhyanagar"],
+    "Sylhet": ["Sylhet Sadar", "Balaganj", "Beanibazar", "Bishwanath", "Companiganj", "Fenchuganj", "Golapganj", "Gowainghat", "Jaintiapur", "Kanaighat", "Osmani Nagar", "Dakshin Surma", "Zakiganj"],
+    "Tangail": ["Tangail Sadar", "Basail", "Bhuapur", "Delduar", "Dhanbari", "Ghatail", "Gopalpur", "Kalihati", "Madhupur", "Mirzapur", "Nagarpur", "Sakhipur"],
+    "Thakurgaon": ["Thakurgaon Sadar", "Baliadangi", "Haripur", "Pirganj", "Ranisankail"]
+};
+  function updatePostOffice() {
+    const postCodeInput = document.getElementById("postCode").value;
+    const postOfficeInput = document.getElementById("postOffice");
 
+    // কিছু উদাহরণ পোস্ট কোড ডাটা (আপনি এখানে আরো যোগ করতে পারেন)
+    const postData = {
+    // ঢাকা বিভাগ
+    "1000": "Dhaka GPO", "1100": "Dhaka Sadar HO", "1203": "Dhaka Sadar", "1204": "Dhaka Sadar",
+    "1205": "New Market", "1206": "Dhaka Cantonment", "1207": "Mohammadpur", "1208": "Dhaka Polytechnic",
+    "1209": "Jigatala", "1211": "Posta", "1212": "Gulshan", "1213": "Banani", "1214": "Basabo",
+    "1215": "Tejgaon", "1216": "Mirpur", "1217": "Shantinagar", "1219": "Khilgaon", "1225": "Uttara",
+    "1229": "Khilkhet", "1230": "Uttara", "1310": "Keraniganj", "1311": "Dhaka Jute Mills",
+    "1312": "Ati", "1313": "Kalatia", "1320": "Nawabganj", "1330": "Joypara", "1340": "Savar",
+    "1341": "Dairy Farm", "1344": "Savar Cantonment", "1350": "Dhamrai", "1360": "Demra",
+
+    // সুনামগঞ্জ ও সিলেট বিভাগ
+    "3000": "Sylhet Sadar", "3080": "Sunamganj Sadar", "3081": "Pagla", "3082": "Patharia",
+    "3010": "Sylhet Bimanbondar", "3012": "Jalalabad", "3100": "Sylhet GPO", "3200": "Moulvibazar Sadar",
+    "3300": "Habiganj Sadar", "3086": "Chhatak", "3087": "Chhatak Cement Factory", "3089": "Moinpur",
+    "3090": "Jagannathpur", "3091": "Sajhalpur",
+
+    // চট্টগ্রাম বিভাগ
+    "4000": "Chittagong GPO", "4100": "Chittagong Sadar", "4202": "Pahartali", "4203": "Custom House",
+    "4204": "Patenga", "4205": "Chittagong Airport", "4208": "Bayezid Bostami", "4209": "Chandgaon",
+    "4210": "Chittagong University", "4211": "Faujdarhat", "4212": "Halishahar", "4700": "Cox's Bazar Sadar",
+
+    // রাজশাহী বিভাগ
+    "6000": "Rajshahi GPO", "6100": "Rajshahi Sadar", "6201": "Rajshahi Court", "6202": "Rajshahi University",
+    "6203": "Kazla", "6204": "Sapura", "6205": "Rajshahi Sugar Mills", "5800": "Bogra Sadar",
+    "5801": "Bogra Cantonment", "6400": "Natore Sadar", "6600": "Pabna Sadar",
+
+    // খুলনা ও বরিশাল বিভাগ
+    "9000": "Khulna GPO", "9100": "Khulna Sadar", "9201": "Khulna Shipyard", "9202": "Khulna University",
+    "9203": "Daulatpur", "8200": "Barishal Sadar", "8300": "Bhola Sadar", "9300": "Bagerhat Sadar",
+
+    // রংপুর ও অন্যান্য
+    "5400": "Rangpur Sadar", "5401": "Rangpur University", "5402": "Rangpur Medical College",
+    "5200": "Dinajpur Sadar", "2200": "Mymensingh Sadar", "2201": "Agricultural University",
+    "3400": "Brahmanbaria Sadar", "3500": "Comilla Sadar", "3501": "Comilla Cantonment"
+};
+
+    // যদি টাইপ করা কোডটি লিস্টে থাকে, তবে নাম দেখাবে
+    if (postData[postCodeInput]) {
+        postOfficeInput.value = postData[postCodeInput];
+    } else {
+        postOfficeInput.value = ""; // মিল না থাকলে খালি থাকবে
+    }
+}
     // আগের অপশনগুলো ক্লিয়ার করা
     upazilaSelect.innerHTML = '<option value="">Select Upazila</option>';
 
