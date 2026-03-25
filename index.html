@@ -337,12 +337,12 @@
                 </div>
                 <div class="form-group">
     <label>Post Code</label>
-    <input type="text" id="postCode" placeholder="যেমন: ৩০৮০" onkeyup="updatePostOffice()">
+    <input type="text" id="postCode" placeholder="Enter code" onkeyup="updatePostOffice()">
 </div>
 
 <div class="form-group">
     <label>Post Office</label>
-    <input type="text" id="postOffice" readonly placeholder="পোস্ট অফিসের নাম অটো আসবে">
+    <input type="text" id="postOffice" readonly placeholder="Write code>
 </div>
             </div>
     <div class="form-group">
@@ -463,7 +463,21 @@ function updateUpazila() {
     "Tangail": ["Tangail Sadar", "Basail", "Bhuapur", "Delduar", "Dhanbari", "Ghatail", "Gopalpur", "Kalihati", "Madhupur", "Mirzapur", "Nagarpur", "Sakhipur"],
     "Thakurgaon": ["Thakurgaon Sadar", "Baliadangi", "Haripur", "Pirganj", "Ranisankail"]
 };
-  function updatePostOffice() {
+  
+    // আগের অপশনগুলো ক্লিয়ার করা
+    upazilaSelect.innerHTML = '<option value="">Select Upazila</option>';
+
+    if (selectedDistrict && upazilaData[selectedDistrict]) {
+        // নতুন উপজেলাগুলো ড্রপডাউনে যোগ করা
+        upazilaData[selectedDistrict].forEach(function(upazila) {
+            let option = document.createElement("option");
+            option.value = upazila;
+            option.text = upazila;
+            upazilaSelect.appendChild(option);
+        });
+    }
+}
+    function updatePostOffice() {
     const postCodeInput = document.getElementById("postCode").value;
     const postOfficeInput = document.getElementById("postOffice");
 
@@ -509,19 +523,6 @@ function updateUpazila() {
         postOfficeInput.value = postData[postCodeInput];
     } else {
         postOfficeInput.value = ""; // মিল না থাকলে খালি থাকবে
-    }
-}
-    // আগের অপশনগুলো ক্লিয়ার করা
-    upazilaSelect.innerHTML = '<option value="">Select Upazila</option>';
-
-    if (selectedDistrict && upazilaData[selectedDistrict]) {
-        // নতুন উপজেলাগুলো ড্রপডাউনে যোগ করা
-        upazilaData[selectedDistrict].forEach(function(upazila) {
-            let option = document.createElement("option");
-            option.value = upazila;
-            option.text = upazila;
-            upazilaSelect.appendChild(option);
-        });
     }
 }
     function submitApplication() {
