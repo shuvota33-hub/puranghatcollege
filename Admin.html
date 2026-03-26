@@ -134,7 +134,8 @@
 
         for (let i = 1; i < tr.length; i++) {
             let tdRoll = tr[i].getElementsByTagName("td")[1]; // Roll column
-            let tdName = tr[i].getElementsByTagName("td")[2]; // Name column
+            let tdreg = tr[i].getElementsByTagName("td")[2]; // Reg column
+            let tdName = tr[i].getElementsByTagName("td")[3]; // Name column
             if (tdRoll || tdName) {
                 let textValue = (tdRoll.textContent || tdRoll.innerText) + (tdName.textContent || tdName.innerText);
                 tr[i].style.display = textValue.toUpperCase().indexOf(input) > -1 ? "" : "none";
