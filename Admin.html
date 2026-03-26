@@ -64,10 +64,12 @@
                 <tr>
                     <th>Photo</th>
                     <th>Roll</th>
+                    <th>Registration</th>
                     <th>Name</th>
                     <th>Father's Name</th>
                     <th>Mobile</th>
                     <th>Group</th>
+                    <th>GPA</th>
                     <th>Applied At</th>
                 </tr>
             </thead>
@@ -94,6 +96,7 @@
     // Password Check
     function checkPass() {
         const pass = document.getElementById('adminPass').value;
+        if(pass==="Shuvo1#@)
         if(pass === "Tabassum#@") { 
             document.getElementById('loginOverlay').style.display = 'none';
             loadData();
@@ -112,10 +115,12 @@
                 let row = `<tr>
                     <td><img src="${data.student_photo || 'https://via.placeholder.com/50'}" class="student-img" onclick="window.open(this.src)"></td>
                     <td><b>${data.ssc_roll}</b></td>
+                    <td>${data.ssc_reg}</td>
                     <td>${data.student_name}</td>
                     <td>${data.father_name}</td>
                     <td>${data.mobile}</td>
                     <td>${data.group}</td>
+                    <td>${data.ssc_gpa}</td>
                     <td>${data.submitted_at || 'N/A'}</td>
                 </tr>`;
                 tableBody.innerHTML += row;
