@@ -9,76 +9,100 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-database-compat.js"></script>
 
     <style>
-      /* স্টুডেন্ট প্রোফাইল বা স্লিপের ডিজাইন */
-.student-slip-container {
-    background: #fff;
-    padding: 30px;
-    border: 2px solid #004d40;
-    border-radius: 15px;
-    margin-top: 20px;
-    position: relative;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-}
+        /* স্টুডেন্ট প্রোফাইল বা স্লিপের ডিজাইন */
+        .student-slip-container {
+            background: #fff;
+            padding: 30px;
+            border: 2px solid #004d40;
+            border-radius: 15px;
+            margin-top: 20px;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
 
-.slip-header {
-    text-align: center;
-    border-bottom: 2px solid #ff9800;
-    padding-bottom: 15px;
-    margin-bottom: 20px;
-}
+        .slip-header {
+            text-align: center;
+            border-bottom: 2px solid #ff9800;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
 
-.student-photo-large {
-    width: 130px;
-    height: 140px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    object-fit: cover;
-    position: absolute;
-    top: 30px;
-    right: 30px;
-}
+        .student-photo-large {
+            width: 130px;
+            height: 140px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            object-fit: cover;
+            position: absolute;
+            top: 30px;
+            right: 30px;
+        }
 
-.slip-details p {
-    font-size: 16px;
-    margin: 8px 0;
-    border-bottom: 1px dashed #eee;
-    padding-bottom: 5px;
-}
+        .slip-details p {
+            font-size: 16px;
+            margin: 8px 0;
+            border-bottom: 1px dashed #eee;
+            padding-bottom: 5px;
+        }
 
-.slip-details b { color: #004d40; width: 150px; display: inline-block; }
+        .slip-details b { color: #004d40; width: 150px; display: inline-block; }
 
-@media (max-width: 600px) {
-    .student-photo-large { position: static; display: block; margin: 0 auto 20px; }
-    .slip-details b { width: 120px; font-size: 14px; }
-}
+        @media (max-width: 600px) {
+            .student-photo-large { position: static; display: block; margin: 0 auto 20px; }
+            .slip-details b { width: 120px; font-size: 14px; }
+        }
+
         body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; }
         .admin-container { max-width: 1200px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
         h2 { color: #004d40; text-align: center; border-bottom: 2px solid #ff9800; padding-bottom: 10px; }
         
-        /* Search Box Style */
         .search-box { width: 100%; max-width: 500px; margin: 20px auto; display: block; padding: 12px 20px; border: 2px solid #004d40; border-radius: 30px; outline: none; font-size: 16px; transition: 0.3s; }
         .search-box:focus { border-color: #ff9800; box-shadow: 0 0 8px rgba(255,152,0,0.2); }
 
-        /* Table Style */
         .table-wrapper { overflow-x: auto; margin-top: 10px; }
         table { width: 100%; border-collapse: collapse; min-width: 900px; }
         th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; font-size: 14px; }
         th { background-color: #004d40; color: white; position: sticky; top: 0; }
         tr:hover { background-color: #f9f9f9; }
         
-        /* Photo Style */
         .student-img { width: 45px; height: 45px; border-radius: 5px; object-fit: cover; border: 1px solid #ddd; cursor: pointer; transition: 0.2s; }
         .student-img:hover { transform: scale(2.5); position: relative; z-index: 10; }
 
         .btn-print { background: #ff9800; color: white; padding: 10px 25px; border: none; border-radius: 5px; cursor: pointer; float: right; margin-bottom: 15px; font-weight: bold; }
         
-        /* Login Overlay */
         #loginOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #004d40; display: flex; justify-content: center; align-items: center; z-index: 1000; }
         .login-box { background: white; padding: 40px; border-radius: 15px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         .login-box input { padding: 12px; width: 250px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 16px; display: block; }
         
+       /* মূল বডি ডিজাইন */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* পুরো স্ক্রিন জুড়ে থাকবে */
+    margin: 0;
+}
+
+/* কন্টেইনার যেন ফুটারকে নিচে ঠেলে দেয় */
+.admin-container {
+    flex: 1; /* এটি কন্টেন্টকে পুরো খালি জায়গা দখল করতে সাহায্য করবে */
+    max-width: 1200px;
+    margin: 20px auto;
+    width: 95%;
+}
+
+/* ফুটার ডিজাইন */
+footer {
+    background: #004d40;
+    color: white;
+    padding: 20px 10px;
+    text-align: center;
+    border-top: 4px solid #ff9800;
+    margin-top: auto; /* এটি ফুটারকে সবসময় একদম নিচে রাখবে */
+}
+        footer a { color: #ff9800; text-decoration: none; }
+
         @media print {
-            .btn-print, .search-box, #loginOverlay, th:last-child, td:last-child { display: none !important; }
+            .btn-print, .search-box, #loginOverlay, th:last-child, td:last-child, footer { display: none !important; }
             body { padding: 0; background: white; }
             .admin-container { box-shadow: none; max-width: 100%; }
         }
@@ -89,20 +113,18 @@
 <div id="loginOverlay">
     <div class="login-box">
         <div style="text-align: center; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 15px;">
-            <img src="https://i.ibb.co/5g8GNqJs/636880279-887390993920777-8859387215607161775-n.jpg" 
-                 alt="College Logo" 
-                 style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid #004d40; padding: 2px;">
-            <h2 style="margin: 10px 0 0; color: #004d40; font-size: 22px; text-transform: uppercase; letter-spacing: 1px;">
-                Puranghat College
-            </h2>
+            <a href="https://puranghatcollege.github.io/puranghatcollege/home.html" style="text-decoration:none;">
+                <img src="https://i.ibb.co/5g8GNqJs/636880279-887390993920777-8859387215607161775-n.jpg" alt="College Logo" style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid #004d40; padding: 2px;">
+                <h2 style="margin: 10px 0 0; color: #004d40; font-size: 22px; border:none;">Puranghat College</h2>
+            </a>
             <p style="margin: 2px 0; font-size: 12px; color: #666; font-weight: bold;">Tahirpur, Sunamganj</p>
         </div>
 
         <h3 style="color: #444; margin-bottom: 20px; font-size: 18px;">Login Portal</h3>
         
         <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-            <button id="btnStudent" onclick="switchLogin('student')" style="flex: 1; padding: 12px; border: 2px solid #004d40; border-radius: 8px; cursor: pointer; font-weight: bold; background: #004d40; color: white; transition: 0.3s;">🎓 Student</button>
-            <button id="btnAdmin" onclick="switchLogin('admin')" style="flex: 1; padding: 12px; border: 2px solid #ddd; border-radius: 8px; cursor: pointer; font-weight: bold; background: white; color: #333; transition: 0.3s;">👨‍🏫 Teacher</button>
+            <button id="btnStudent" onclick="switchLogin('student')" style="flex: 1; padding: 12px; border: 2px solid #004d40; border-radius: 8px; cursor: pointer; font-weight: bold; background: #004d40; color: white;">🎓 Student</button>
+            <button id="btnAdmin" onclick="switchLogin('admin')" style="flex: 1; padding: 12px; border: 2px solid #ddd; border-radius: 8px; cursor: pointer; font-weight: bold; background: white; color: #333;">👨‍🏫 Teacher</button>
         </div>
 
         <div id="loginFields">
@@ -110,40 +132,32 @@
             <input type="password" id="adminPass" placeholder="Enter Password" style="width: 100%; box-sizing: border-box;">
         </div>
         
-        <button class="btn-print" id="mainLoginBtn" onclick="checkLogin()" style="float:none; width:100%; padding: 15px; font-size: 18px; border-radius: 8px; margin-top: 10px;">Login Access</button>
-        
+        <button class="btn-print" id="mainLoginBtn" onclick="checkLogin()" style="float:none; width:100%; padding: 15px; font-size: 18px;">Login Access</button>
         <input type="hidden" id="currentRole" value="student">
     </div>
 </div>
 
-
-
 <div class="admin-container">
     <button class="btn-print" onclick="window.print()">Print This List</button>
     <h2>Student Admission List - 2026</h2>
-    
     <input type="text" id="searchInput" class="search-box" onkeyup="searchTable()" placeholder="Roll or Name...">
-
     <div class="table-wrapper">
         <table id="studentTable">
             <thead>
                 <tr>
-                    <th>Photo</th>
-                    <th>Roll</th>
-                    <th>Registration</th>
-                    <th>Name</th>
-                    <th>Father's Name</th>
-                    <th>Mobile</th>
-                    <th>Group</th>
-                    <th>GPA</th>
-                    <th>Applied At</th>
+                    <th>Photo</th><th>Roll</th><th>Registration</th><th>Name</th><th>Father's Name</th><th>Mobile</th><th>Group</th><th>GPA</th><th>Applied At</th>
                 </tr>
             </thead>
-            <tbody id="tableBody">
-                </tbody>
+            <tbody id="tableBody"></tbody>
         </table>
     </div>
 </div>
+
+<footer id="mainFooter" style="display: none;">
+    <div style="max-width: 1200px; margin: auto;">
+        <p>&copy; 2026 <a href="https://puranghatcollege.github.io/puranghatcollege/home.html">Puranghat College</a> | Developed by <b>Shuvo</b></p>
+    </div>
+</footer>
 
 <script>
     const firebaseConfig = {
@@ -159,126 +173,87 @@
     firebase.initializeApp(firebaseConfig);
     const db = firebase.database();
 
-    // Password Check
-    // পাসওয়ার্ড ও লগইন চেক করার নতুন লজিক
-// বাটন পরিবর্তন করার ফাংশন
-function switchLogin(role) {
-    const btnStudent = document.getElementById('btnStudent');
-    const btnAdmin = document.getElementById('btnAdmin');
-    const adminUserInput = document.getElementById('adminUser');
-    const currentRole = document.getElementById('currentRole');
+    function switchLogin(role) {
+        const btnStudent = document.getElementById('btnStudent');
+        const btnAdmin = document.getElementById('btnAdmin');
+        const adminUserInput = document.getElementById('adminUser');
+        document.getElementById('currentRole').value = role;
 
-    currentRole.value = role;
-
-    if (role === 'student') {
-        // স্টুডেন্ট মোড একটিভ
-        btnStudent.style.background = '#004d40';
-        btnStudent.style.color = 'white';
-        btnAdmin.style.background = 'white';
-        btnAdmin.style.color = '#333';
-        btnAdmin.style.border = '2px solid #ddd';
-        adminUserInput.placeholder = "Enter Your User ID";
-    } else {
-        // এডমিন/শিক্ষক মোড একটিভ
-        btnAdmin.style.background = '#004d40';
-        btnAdmin.style.color = 'white';
-        btnStudent.style.background = 'white';
-        btnStudent.style.color = '#333';
-        btnStudent.style.border = '2px solid #ddd';
-        adminUserInput.placeholder = "Enter Username";
-    }
-}
-
-// লগইন চেক করার আপডেট করা ফাংশন
-function checkLogin() {
-    const role = document.getElementById('currentRole').value;
-    const user = document.getElementById('adminUser').value.trim();
-    const pass = document.getElementById('adminPass').value.trim();
-
-    if (role === "admin") {
-        // এডমিন লগইন চেক
-        if (user === "admin" && pass === "Tabassum#@") { 
-            document.getElementById('loginOverlay').style.display = 'none';
-            loadData(); 
+        if (role === 'student') {
+            btnStudent.style.background = '#004d40'; btnStudent.style.color = 'white';
+            btnAdmin.style.background = 'white'; btnAdmin.style.color = '#333';
+            adminUserInput.placeholder = "Enter Your User ID";
         } else {
-            alert("ভুল এডমিন আইডি বা পাসওয়ার্ড!");
+            btnAdmin.style.background = '#004d40'; btnAdmin.style.color = 'white';
+            btnStudent.style.background = 'white'; btnStudent.style.color = '#333';
+            adminUserInput.placeholder = "Enter Username";
         }
-    } else if (role === "student") {
-        // স্টুডেন্ট লগইন চেক
-        if(user === "" || pass === "") {
-            alert("ইউজার আইডি এবং পাসওয়ার্ড দিন!");
-            return;
-        }
-        checkStudentLogin(user, pass); 
     }
-}
 
-// স্টুডেন্টদের জন্য আলাদা ডেটা লোড করার ফাংশন
-    
-function checkStudentLogin(providedID, providedPass) {
-    const adminContainer = document.querySelector('.admin-container');
-    
-    // এখন আমরা 'user_id' দিয়ে সার্চ করছি
-    db.ref('admissions').orderByChild('user_id').equalTo(providedID).once('value', (snapshot) => {
-        if (snapshot.exists()) {
-            let found = false;
-            snapshot.forEach((childSnapshot) => {
-                const data = childSnapshot.val();
-                
-                // পাসওয়ার্ড চেক করা হচ্ছে
-                if(data.student_pass === providedPass) {
-                    found = true;
-                    document.getElementById('loginOverlay').style.display = 'none';
-                    
-                    // আপনার সেই অ্যাডমিশন স্লিপ ফরমেটটি এখানে দেখাবে
-                    adminContainer.innerHTML = `
-                        <div class="student-slip-container" id="printArea">
-                            <div class="slip-header">
-                                <img src="https://i.ibb.co/5g8GNqJs/636880279-887390993920777-8859387215607161775-n.jpg" style="width: 70px; border-radius: 50%;">
-                                <h2 style="margin: 5px 0; border:none; color:#004d40;">PURANGHAT COLLEGE</h2>
-                                <p style="margin:0; font-size:14px; color:#666;">Student Admission Confirmation - 2026</p>
-                            </div>
+    function checkLogin() {
+        const role = document.getElementById('currentRole').value;
+        const user = document.getElementById('adminUser').value.trim();
+        const pass = document.getElementById('adminPass').value.trim();
 
-                            <img src="${data.student_photo || 'https://via.placeholder.com/130'}" class="student-photo-large">
-
-                            <div class="slip-details">
-                                <p><b>Student Name:</b> ${data.student_name}</p>
-                                <p><b>User ID:</b> <span style="color:#ff9800; font-weight:bold;">${data.user_id}</span></p>
-                                <p><b>Father's Name:</b> ${data.father_name}</p>
-                                <p><b>SSC Roll:</b> ${data.ssc_roll}</p>
-                                <p><b>Mobile:</b> ${data.mobile}</p>
-                                <p><b>Group:</b> ${data.group}</p>
-                                <p><b>District:</b> ${data.district}</p>
-                                <p><b>Upazila:</b> ${data.upazila || 'N/A'}</p>
-                                <p><b>Applied At:</b> ${data.submitted_at}</p>
-                            </div>
-
-                            <div style="margin-top: 30px; text-align: center;" class="no-print">
-                                <button onclick="window.print()" class="btn-print" style="float:none; background:#004d40;">Print Your Copy</button>
-                                <button onclick="window.location.reload()" class="btn-print" style="float:none; background:#777; margin-left:10px;">Logout</button>
-                            </div>
-                        </div>
-                    `;
-                }
-            });
-            
-            if(!found) alert("ভুল পাসওয়ার্ড! আবার চেষ্টা করুন।");
-            
+        if (role === "admin") {
+            if (user === "admin" && pass === "Tabassum#@") { 
+                document.getElementById('loginOverlay').style.display = 'none';
+                loadData(); 
+            } else { alert("ভুল এডমিন আইডি বা পাসওয়ার্ড!"); }
         } else {
-            alert("এই ইউজার আইডি (User ID) টি আমাদের ডাটাবেজে নেই!");
+            if(user === "" || pass === "") { alert("আইডি ও পাসওয়ার্ড দিন!"); return; }
+            checkStudentLogin(user, pass); 
         }
-    });
-}
+    }
 
-    // Load Data
+    function checkStudentLogin(providedID, providedPass) {
+        db.ref('admissions').orderByChild('user_id').equalTo(providedID).once('value', (snapshot) => {
+            if (snapshot.exists()) {
+                let found = false;
+                snapshot.forEach((childSnapshot) => {
+                    const data = childSnapshot.val();
+                    if(data.student_pass === providedPass) {
+                        found = true;
+                        document.getElementById('loginOverlay').style.display = 'none';
+                        document.getElementById('mainFooter').style.display = 'block';
+                        document.querySelector('.admin-container').innerHTML = `
+                            <div class="student-slip-container">
+                                <div class="slip-header">
+                                    <img src="https://i.ibb.co/5g8GNqJs/636880279-887390993920777-8859387215607161775-n.jpg" style="width:70px; border-radius:50%;">
+                                    <h2 style="border:none;">PURANGHAT COLLEGE</h2>
+                                    <p>Admission Confirmation - 2026</p>
+                                </div>
+                                <img src="${data.student_photo || 'https://via.placeholder.com/130'}" class="student-photo-large">
+                                <div class="slip-details">
+                                    <p><b>Name:</b> ${data.student_name}</p>
+                                    <p><b>User ID:</b> ${data.user_id}</p>
+                                    <p><b>Father:</b> ${data.father_name}</p>
+                                    <p><b>Roll:</b> ${data.ssc_roll}</p>
+                                    <p><b>Mobile:</b> ${data.mobile}</p>
+                                    <p><b>Group:</b> ${data.group}</p>
+                                    <p><b>Applied At:</b> ${data.submitted_at}</p>
+                                </div>
+                                <div style="text-align:center;" class="no-print">
+                                    <button onclick="window.print()" class="btn-print" style="float:none; background:#004d40;">Print</button>
+                                    <button onclick="window.location.reload()" class="btn-print" style="float:none; background:#777; margin-left:10px;">Logout</button>
+                                </div>
+                            </div>`;
+                    }
+                });
+                if(!found) alert("ভুল পাসওয়ার্ড!");
+            } else { alert("আইডি খুঁজে পাওয়া যায়নি!"); }
+        });
+    }
+
     function loadData() {
+        document.getElementById('mainFooter').style.display = 'block';
         const tableBody = document.getElementById('tableBody');
         db.ref('admissions').on('value', (snapshot) => {
             tableBody.innerHTML = "";
             snapshot.forEach((childSnapshot) => {
                 const data = childSnapshot.val();
-                let row = `<tr>
-                    <td><img src="${data.student_photo || 'https://via.placeholder.com/50'}" class="student-img" onclick="window.open(this.src)"></td>
+                tableBody.innerHTML += `<tr>
+                    <td><img src="${data.student_photo || ''}" class="student-img" onclick="window.open(this.src)"></td>
                     <td><b>${data.ssc_roll}</b></td>
                     <td>${data.ssc_reg}</td>
                     <td>${data.student_name}</td>
@@ -288,27 +263,18 @@ function checkStudentLogin(providedID, providedPass) {
                     <td>${data.ssc_gpa}</td>
                     <td>${data.submitted_at || 'N/A'}</td>
                 </tr>`;
-                tableBody.innerHTML += row;
             });
         });
     }
 
-    // Search Logic
     function searchTable() {
         let input = document.getElementById("searchInput").value.toUpperCase();
         let tr = document.getElementById("studentTable").getElementsByTagName("tr");
-
         for (let i = 1; i < tr.length; i++) {
-            let tdRoll = tr[i].getElementsByTagName("td")[1]; // Roll column
-            let tdreg = tr[i].getElementsByTagName("td")[2]; // Reg column
-            let tdName = tr[i].getElementsByTagName("td")[3]; // Name column
-            if (tdRoll || tdName) {
-                let textValue = (tdRoll.textContent || tdRoll.innerText) + (tdName.textContent || tdName.innerText);
-                tr[i].style.display = textValue.toUpperCase().indexOf(input) > -1 ? "" : "none";
-            }
+            let textValue = tr[i].innerText;
+            tr[i].style.display = textValue.toUpperCase().indexOf(input) > -1 ? "" : "none";
         }
     }
 </script>
-
 </body>
 </html>
