@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology Smart App</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+    --main: linear-gradient(135deg,#004d40,#764ba2);
+    --bg:#f0f8ff;
+    --card:#eef2f7;
+    --text:#333;
+}
+body.dark{
+    --bg:black ;
+    --card:#2b2b3c;
+    --text:#eee;
+}
+/* responsive table scroll */
+/* পুরো টেবিল কন্টেইনারে প্যাডিং যোগ করা */
+.table-container {
+    overflow-x: auto;
+    padding:0 5px; /* চারপাশ থেকে সমান ১০ পিক্সেল ফাঁকা থাকবে */
+    width: 100%;
+    box-sizing: border-box; /* এটি নিশ্চিত করবে প্যাডিং যেন বক্সের বাইরে না যায় */
+}
+
+table {
+    width: 100%; /* টেবিলটি কন্টেইনারের পুরো জায়গা নেবে */
+    margin: 0 auto; /* অটো মার্জিন দিলে টেবিল মাঝখানে থাকবে */
+    border-left: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    border-collapse: collapse;
+    /* সব টেবিলের জন্য সাধারণ উন্নতি */
+    table-layout: fixed; /* এটি কলামগুলোকে সমানভাবে ছড়িয়ে দেয় */
+    word-wrap: break-word;
+}
+/* কলামের ভেতরের লেখাগুলো বাম থেকে কিছুটা সরিয়ে দেওয়ার জন্য */
+th, td {
+    padding: 12px 15px; /* ১৫ পিক্সেল প্যাডিং লেখাগুলোকে বর্ডার থেকে দূরে সরাবে */
+    text-align: left;
+    border-bottom: 1px solid #ddd; 
+    border-right: 1px solid #ddd; 
+}
+
+/* ডার্ক মোডে বর্ডার ঠিক রাখা */
+body.dark td {
+    border-bottom: 1px solid #444;
+}
+
+/* আপনি যদি চান শুধু প্রথম কলামটি (পর্ব) একটু বেশি সরে থাকুক */
+td:first-child, th:first-child {
+    padding-left: 15px; 
+}
+
+/* হোম স্ক্রিনের বাটনগুলোকে সাজানোর জন্য */
+#home {
+    display: flex;
+    flex-direction: column; /* বাটনগুলো ওপর-নিচে থাকবে */
+    align-items: center;    /* মাঝখানে নিয়ে আসবে */
+    justify-content: center;
+    gap: 15px;             /* দুটি বাটনের মাঝে ফাঁকা জায়গা */
+    padding-top: 50px;      /* ওপর থেকে কিছুটা নিচে নামানোর জন্য */
+}
+
+/* ১ম ও ২য় পত্রের বাটন নির্দিষ্টভাবে বড় করার জন্য */
+#home .btn {
+    width: 85%;            /* বাটনটি স্ক্রিনের ৮৫% চওড়া হবে */
+    max-width: 350px;      /* পিসি বা বড় স্ক্রিনে যেন অতিরিক্ত বড় না হয় */
+    padding: 20px;         /* বাটনের উচ্চতা এবং ভেতরের জায়গা বাড়বে */
+    font-size: 20px;       /* লেখার সাইজ বড় হবে */
+    font-weight: bold;     /* লেখা মোটা হবে */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2); /* একটু থ্রিডি লুক দেওয়ার জন্য */
+}
+header {
+    background: #004d40;
+    color: white;
+    padding: 20px 15px;
+    display: flex;
+    flex-direction: column; /* লোগো ও নাম ওপর-নিচে রাখার জন্য */
+    align-items: center;    /* মাঝখানে আনার জন্য */
+    gap: 10px;
+}
+
+.college-logo {
+    width: 60px;           /* লোগোর সাইজ এখান থেকে ছোট-বড় করতে পারবেন */
+    height: 60px;
+    border-radius: 50%;    /* গোল দেখানোর জন্য */
+    background: white;     /* লোগো না থাকলে সাদা ব্যাকগ্রাউন্ড দেখাবে */
+    object-fit: cover;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.college-name {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 0;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+}
+
+.app-title {
+    font-size: 14px;
+    opacity: 0.9;
+}
+body {
+    margin: 0;
+    /* আধুনিক ফ্রন্ট ফ্যামিলি */
+    font-family: 'Hind Siliguri', 'Poppins', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6; /* লাইনগুলোর মাঝে গ্যাপ বাড়িয়ে পড়ার সুবিধা করা */
+}
+
+/* শিরোনামগুলোর জন্য আলাদা স্টাইল */
+h1, h2, h3 {
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: 0.5px;
+}
+
+/* বাটনের লেখার স্টাইল */
+.btn {
+    padding: 12px 18px;
+    margin: 5px;
+    border: none;
+    border-radius: 10px;
+    background: var(--main);
+    color: white;
+    cursor: pointer;
+    font-family: 'Hind Siliguri', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn:active {
+    transform: scale(0.95); /* ক্লিক করলে বাটনটি একটু দেবে যাবে */
+}
+/* টেবিলকে পুরো স্ক্রিন জুড়ে দেখানোর জন্য */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: var(--card);
+}
+
+/* সারি এবং কলামের বর্ডার ও এলাইনমেন্ট */
+th, td {
+    padding: 12px 10px;
+    text-align: left; /* বাম থেকে শুরু হবে কিন্তু জায়গা নিয়ে */
+    border-bottom: 1px solid #ddd; /* হালকা বর্ডার */
+}
+
+/* ডার্ক মোডে বর্ডার কালার পরিবর্তন */
+body.dark th, body.dark td {
+    border-bottom: 1px solid #444;
+}
+
+/* হেডার এর জন্য আলাদা ব্যাকগ্রাউন্ড */
+thead th {
+    background-color: #764ba2;
+    color: white;
+    font-weight: 600;
+}
+
+/* মাউস নিলে সারির রঙ পরিবর্তন (ঐচ্ছিক) */
+tbody tr:hover {
+    background-color: rgba(0,0,0,0.05);
+}
+
+body.dark tbody tr:hover {
+    background-color: rgba(255,255,255,0.05);
+}
+
+/* আগের ভুল tr ডিজাইনটি ডিলিট করে দিন বা নিচের মতো করে দিন */
+tr {
+    /* আগের কার্ড লুকের প্রপার্টিগুলো সরিয়ে দেওয়া হয়েছে */
+}
+
+/* সার্চ বক্সটিকে সুন্দর করার জন্য */
+#search {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    box-sizing: border-box; /* যাতে প্যাডিং এর কারণে বক্স বাইরে না যায় */
+}
+.sci {
+    font-style: italic;
+    font-family: 'Poppins', sans-serif; /* বৈজ্ঞানিক নাম ইংরেজির জন্য Poppins ভালো */
+    color: #c0392b;
+    font-weight: 600;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <img src="https://puranghatcollege.github.io/puranghatcollege/logo.png" alt="College Logo" class="college-logo">
+    
+    <div>
+        <h1 class="college-name">Purabghat College</h1>
+        <span class="app-title">📘 Biology Smart App</span>
+    </div>
+
+    <button class="btn" style="font-size: 12px; padding: 5px 10px;" onclick="toggleDark()">🌙 Dark Mode</button>
+</header>
+
+<div class="container">
+
+<!-- HOME -->
+<div id="home">
+<button class="btn" onclick="show('p1')">Biology 1st Paper</button>
+<button class="btn" onclick="show('p2')">Biology 2nd Paper</button>
+</div>
+
+<!-- 1st PAPER -->
+<div id="p1" style="display:none">
+<div class="card">
+<h3>1st Paper Chapters</h3>
+
+<div class="grid">
+<button class="btn">Chapter 1</button>
+<button class="btn">Chapter 2</button>
+<button class="btn">Chapter 3</button>
+<button class="btn">Chapter 4</button>
+<button class="btn">Chapter 5</button>
+<button class="btn">Chapter 6</button>
+<button class="btn">Chapter 7</button>
+<button class="btn">Chapter 8</button>
+<button class="btn">Chapter 9</button>
+<button class="btn">Chapter 10</button>
+</div>
+
+<br>
+<button class="btn" onclick="show('home')">⬅ Back</button>
+</div>
+</div>
+
+<!-- 2nd PAPER -->
+<div id="p2" style="display:none">
+<div class="card">
+<h3>2nd Paper Chapters</h3>
+
+<div class="grid">
+<button class="btn" onclick="show('ch1')">Chapter 1</button>
+<button class="btn" onclick="show('ch2')">Chapter 2: Animal Identity</button>
+<button class="btn" onclick="show('ch3')">Chapter 3</button>
+<button class="btn" onclick="show('ch4')">Chapter 4</button>
+<button class="btn" onclick="show('ch5')" >Chapter 5</button>
+<button class="btn" onclick="show('ch6')" >Chapter 6</button>
+<button class="btn" onclick="show('ch7')">Chapter 7</button>
+<button class="btn">Chapter 8</button>
+<button class="btn">Chapter 9</button>
+<button class="btn">Chapter 10</button>
+</div>
+
+<br>
+<button class="btn" onclick="show('home')">⬅ Back</button>
+</div>
+</div>
+
+<!-- CHAPTER 1 TABLE -->
+<div id="ch1" style="display:none">
+<div class="card">
+
+<h3>২য় পত্র - ১ম অধ্যায়: বৈজ্ঞানিক নাম</h3>
+
+<input type="text" id="search" placeholder="🔍 খুঁজুন..." onkeyup="searchTable()">
+<div class="table-container">
+<table id="table">
+<thead>
+<tr>
+<th>পর্ব</th>
+<th>নাম</th>
+<th>Scientific</th>
+<th>উচ্চারণ</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr><td>Porifera</td><td>সায়কন</td><td class="sci">Scypha gelatinosum</td><td>সাইফা জেলাটিনোসাম</td></tr>
+<tr><td>Porifera</td><td>স্পঞ্জিলা</td><td class="sci">Spongilla lacustris</td><td>স্পঞ্জিলা ল্যাকুস্ট্রিস</td></tr>
+
+<tr><td>Cnidaria</td><td>হাইড্রা</td><td class="sci">Hydra vulgaris</td><td>হাইড্রা ভালগারিস</td></tr>
+<tr><td>Cnidaria</td><td>জেলিফিশ</td><td class="sci">Aurelia aurita</td><td>অরিলিয়া অরিটা</td></tr>
+<tr><td>Cnidaria</td><td>লাল কোরাল</td><td class="sci">Corallium rubrum</td><td>কোরালিয়াম রুব্রাম</td></tr>
+<tr><td>Cnidaria</td><td>ওবেলিয়া</td><td class="sci">Obelia geniculata</td><td>ওবেলিয়া জেনিকুলাটা</td></tr>
+
+<tr><td>Platyhelminthes</td><td>যকৃত কৃমি</td><td class="sci">Fasciola hepatica</td><td>ফ্যাসিওলা হেপাটিকা</td></tr>
+<tr><td>Platyhelminthes</td><td>ফিতাকৃমি</td><td class="sci">Taenia solium</td><td>টেনিয়া সোলিয়াম</td></tr>
+
+<tr><td>Nematoda</td><td>গোলকৃমি</td><td class="sci">Ascaris lumbricoides</td><td>অ্যাসকারিস লামব্রিকোয়ডিস</td></tr>
+<tr><td>Nematoda</td><td>গোদ কৃমি</td><td class="sci">Wuchereria bancrofti</td><td>উচেরেরিয়া ব্যানক্রফটি</td></tr>
+<tr><td>Nematoda</td><td>চোখ কৃমি</td><td class="sci">Loa loa</td><td>লোয়া লোয়া</td></tr>
+
+<tr><td>Mollusca</td><td>আপেল শামুক</td><td class="sci">Pila globosa</td><td>পাইলা গ্লোবোসা</td></tr>
+<tr><td>Mollusca</td><td>অক্টোপাস</td><td class="sci">Octopus vulgaris</td><td>অক্টোপাস ভালগারিস</td></tr>
+<tr><td>Mollusca</td><td>মুক্তা ঝিনুক</td><td class="sci">Pinctada vulgaris</td><td>পিংটাদা ভালগারিস</td></tr>
+<tr><td>Mollusca</td><td>ক্যাটল ফিশ</td><td class="sci">Sepia officinalis</td><td>সেপিয়া অফিসিনালিস</td></tr>
+
+<tr><td>Annelida</td><td>কেঁচো</td><td class="sci">Metaphire posthuma</td><td>মেটাফায়ার পোস্টহুমা</td></tr>
+<tr><td>Annelida</td><td>জোক</td><td class="sci">Hirudinaria granulosa</td><td>হিরুডিনারিয়া গ্রানুলোসা</td></tr>
+<tr><td>Annelida</td><td>নিল এনথিস</td><td class="sci">Neanthes virens</td><td>নিয়ানথিস ভিরেন্স</td></tr>
+
+<tr><td>Arthropoda</td><td>ঘাসফড়িং</td><td class="sci">Poekilocerus pictus</td><td>পয়কিলোসেরাস পিকটাস</td></tr>
+<tr><td>Arthropoda</td><td>আরশোলা</td><td class="sci">Periplaneta americana</td><td>পেরিপ্লানেটা আমেরিকানা</td></tr>
+<tr><td>Arthropoda</td><td>চিংড়ি</td><td class="sci">Penaeus monodon</td><td>পেনিয়াস মনোডন</td></tr>
+<tr><td>Arthropoda</td><td>মৌমাছি</td><td class="sci">Apis indica</td><td>এপিস ইন্ডিকা</td></tr>
+<tr><td>Arthropoda</td><td>রাজ কাঁকড়া</td><td class="sci">Limulus polyphemus</td><td>লিমুলাস পলিফেমাস</td></tr>
+
+<tr><td>Echinodermata</td><td>তারামাছ</td><td class="sci">Asterias rubens</td><td>অ্যাস্টেরিয়াস রুবেনস</td></tr>
+<tr><td>Echinodermata</td><td>সমুদ্র শসা</td><td class="sci">Cucumaria planci</td><td>কুকুমিয়া প্লানকি</td></tr>
+<tr><td>Echinodermata</td><td>ভঙ্গুর তারা</td><td class="sci">Ophiura albida</td><td>ওফিউরা অ্যালবিডা</td></tr>
+
+<tr><td>Chordata</td><td>রুই মাছ</td><td class="sci">Labeo rohita</td><td>লাবিও রোহিতা</td></tr>
+<tr><td>Chordata</td><td>ইলিশ মাছ</td><td class="sci">Tenualosa ilisha</td><td>টেনুয়ালোসা ইলিশা</td></tr>
+<tr><td>Chordata</td><td>কুনো ব্যাঙ</td><td class="sci">Duttaphrynus melanostictus</td><td>দত্তাফ্রিনাস মেলানোস্টিক্টাস</td></tr>
+<tr><td>Chordata</td><td>মাগুর মাছ</td><td class="sci">Clarias batrachus</td><td>ক্ল্যারিয়াস বাট্রাকাস</td></tr>
+<tr><td>Chordata</td><td>হাঙর</td><td class="sci">Scoliodon laticaudus</td><td>স্কোলিওডন ল্যাটিকাডাস</td></tr>
+<tr><td>Chordata</td><td>দোয়েল</td><td class="sci">Copsychus saularis</td><td>কপসাইকাস সলারিস</td></tr>
+<tr><td>Chordata</td><td>বাঘ</td><td class="sci">Panthera tigris</td><td>প্যানথেরা টাইগ্রিস</td></tr>
+<tr><td>Chordata</td><td>মানুষ</td><td class="sci">Homo sapiens</td><td>হোমো স্যাপিয়েন্স</td></tr>
+
+</tbody>
+</table>
+</div>
+<br>
+<button class="btn" onclick="show('p2')">⬅ Back</button>
+
+</div>
+</div>
+<div id="ch2" style="display:none">
+<div class="card">
+
+<h3>২য় পত্র - ২য় অধ্যায়: প্রাণীর পরিচিতি</h3>
+
+<input type="text" id="search2" placeholder="🔍 খুঁজুন..." onkeyup="searchTable2()">
+<div class="table-container">
+<table id="table2">
+<thead>
+<tr>
+<th>বিভাগ</th>
+<th>নাম</th>
+<th>Scientific Name</th>
+<th>উচ্চারণ</th>
+</tr>
+</thead>
+
+<tbody>
+<tr><td>Cnidaria</td><td>হাইড্রা (সাধারণ)</td><td class="sci">Hydra vulgaris</td><td>হাইড্রা ভালগারিস</td></tr>
+<tr><td>Cnidaria</td><td>সবুজ হাইড্রা</td><td class="sci">Chlorohydra viridissima</td><td>ক্লোরোহাইড্রা ভিরিডিসিমা</td></tr>
+<tr><td>Cnidaria</td><td>বাদামী হাইড্রা</td><td class="sci">Hydra oligactis</td><td>হাইড্রা অলিগ্যাকটিস</td></tr>
+
+<tr><td>Arthropoda</td><td>ঘাসফড়িং</td><td class="sci">Poekilocerus pictus</td><td>পয়কিলোসেরাস পিকটাস</td></tr>
+<tr><td>Arthropoda</td><td>তেলাপোকা</td><td class="sci">Periplaneta americana</td><td>পেরিপ্লানেটা আমেরিকানা</td></tr>
+<tr><td>Arthropoda</td><td>মৌমাছি</td><td class="sci">Apis indica</td><td>এপিস ইন্ডিকা</td></tr>
+<tr><td>Arthropoda</td><td>রেশম পোকা</td><td class="sci">Bombyx mori</td><td>বোম্বিক্স মোরি</td></tr>
+<tr><td>Arthropoda</td><td>রাজ কাঁকড়া</td><td class="sci">Limulus polyphemus</td><td>লিমুলাস পলিফেমাস</td></tr>
+
+<tr><td>Chordata</td><td>রুই মাছ</td><td class="sci">Labeo rohita</td><td>লাবিও রোহিতা</td></tr>
+<tr><td>Chordata</td><td>কাতলা মাছ</td><td class="sci">Catla catla</td><td>কাতলা কাতলা</td></tr>
+<tr><td>Chordata</td><td>মৃগেল মাছ</td><td class="sci">Cirrhinus cirrhosus</td><td>সিরহিনাস সিরহোসাস</td></tr>
+<tr><td>Chordata</td><td>কালবাউশ মাছ</td><td class="sci">Labeo calbasu</td><td>লাবিও কালবাসু</td></tr>
+<tr><td>Chordata</td><td>সরপুঁটি</td><td class="sci">Puntius sarana</td><td>পুন্টিয়াস সারানা</td></tr>
+<tr><td>Chordata</td><td>পাঙ্গাশ মাছ</td><td class="sci">Pangasius pangasius</td><td>পাঙ্গাসিয়াস পাঙ্গাসিয়াস</td></tr>
+<tr><td>Chordata</td><td>ইলিশ মাছ</td><td class="sci">Tenualosa ilisha</td><td>টেনুয়ালোসা ইলিশা</td></tr>
+<tr><td>Chordata</td><td>মাগুর মাছ</td><td class="sci">Clarias batrachus</td><td>ক্ল্যারিয়াস বাট্রাকাস</td></tr>
+<tr><td>Chordata</td><td>হাঙর</td><td class="sci">Scoliodon laticaudus</td><td>স্কোলিওডন ল্যাটিকাডাস</td></tr>
+<tr><td>Chordata</td><td>কুনো ব্যাঙ</td><td class="sci">Duttaphrynus melanostictus</td><td>দত্তাফ্রিনাস মেলানোস্টিক্টাস</td></tr>
+<tr><td>Chordata</td><td>মানুষ</td><td class="sci">Homo sapiens</td><td>হোমো স্যাপিয়েন্স</td></tr>
+</tbody>
+</table>
+<div class="card" style="margin-top:20px;">
+    <h3>গুরুত্বপূর্ণ তথ্য কণিকা</h3>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>টপিক</th>
+                    <th>বৈশিষ্ট্য/তথ্য</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>হাইড্রার নেমাটোসিস্ট</b></td>
+                    <td>স্টেনোটিল, ভলভেন্ট, স্ট্রেপটোলিন গ্লুটিন্যান্ট ও স্টেরিওলিন গ্লুটিন্যান্ট।</td>
+                </tr>
+                <tr>
+                    <td><b>ঘাসফড়িংয়ের মুখোপাঙ্গ</b></td>
+                    <td>ম্যান্ডিবুলেট বা চর্বণ উপযোগী। প্রধান অংশ ৫টি।</td>
+                </tr>
+                <tr>
+                    <td><b>ঘাসফড়িংয়ের হৃদপিণ্ড</b></td>
+                    <td>৫টি প্রকোষ্ঠ বিশিষ্ট এবং ল্যারিঞ্জিয়াল পেশি দ্বারা নিয়ন্ত্রিত।</td>
+                </tr>
+                <tr>
+                    <td><b>রুই মাছের হৃদপিণ্ড</b></td>
+                    <td>ভেনাস হার্ট (শুধু কার্বন ডাই-অক্সাইড যুক্ত রক্ত বহন করে)।</td>
+                </tr>
+                <tr>
+                    <td><b>রুই মাছের আইঁশ</b></td>
+                    <td>সাইক্লয়েড (Cycloid) প্রকৃতির।</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="card" style="margin-top:20px; border-left: 5px solid #764ba2;">
+    <h3 style="color: #004d40;">📚 গুরুত্বপূর্ণ তথ্য কণিকা (এক নজরে)</h3>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>টপিক</th>
+                    <th>গুরুত্বপূর্ণ তথ্য (MCQ + কুইজ)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>হাইড্রার চলন</b></td>
+                    <td>লুপিং (ধীর), সমারসল্টিং (দ্রুত), গ্লাইডিং (পাদীয় চাকতি)।</td>
+                </tr>
+                <tr>
+                    <td><b>নেমাটোসিস্ট</b></td>
+                    <td>প্রধান ৪ প্রকার। সবচেয়ে বড় ও বিষাক্ত হলো স্টেনোটিল।</td>
+                </tr>
+                <tr>
+                    <td><b>হাইড্রার খাদ্য</b></td>
+                    <td>কার্নিভোর বা মাংসাশী। প্রধান খাদ্য সাইক্লপস ও ড্যাফনিয়া।</td>
+                </tr>
+
+                <tr>
+                    <td><b>ঘাসফড়িংয়ের ডানা</b></td>
+                    <td>সামনের ডানা শক্ত ও সরু (টেগমিনা), পেছনের ডানা বড় ও পাতলা।</td>
+                </tr>
+                <tr>
+                    <td><b>মুখোপাঙ্গ</b></td>
+                    <td>৫টি অংশ: ল্যাব্রাম, ম্যান্ডিবল, ম্যাক্সিলা, ল্যাবিয়াম, হাইপোফ্যারিংক্স।</td>
+                </tr>
+                <tr>
+                    <td><b>ওমাটিডিয়াম</b></td>
+                    <td>পুঞ্জাক্ষির গাঠনিক একক। ঘাসফড়িংয়ে প্রায় ২০০০টি ওমাটিডিয়াম থাকে।</td>
+                </tr>
+                <tr>
+                    <td><b>শ্বসন ছিদ্র</b></td>
+                    <td>মোট ১০ জোড়া স্পাইরাকল বা শ্বসন ছিদ্র থাকে।</td>
+                </tr>
+
+                <tr>
+                    <td><b>রুই মাছের হৃদপিণ্ড</b></td>
+                    <td>একে 'ভেনাস হার্ট' বলে। ১টি অলিন্দ ও ১টি নিলয় থাকে।</td>
+                </tr>
+                <tr>
+                    <td><b>পবিপাক গ্রন্থি</b></td>
+                    <td>যকৃৎ সবচেয়ে বড় গ্রন্থি। অগ্ন্যাশয়কে মিশ্র গ্রন্থি বলা হয়।</td>
+                </tr>
+                <tr>
+                    <td><b>রুই মাছের রক্ত</b></td>
+                    <td>লোহিত রক্তকণিকা ডিম্বাকার ও নিউক্লিয়াসযুক্ত।</td>
+                </tr>
+                <tr>
+                    <td><b>বায়ুথলি (পটকা)</b></td>
+                    <td>প্লবতা রক্ষাকারী অঙ্গ হিসেবে কাজ করে।</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="card" style="margin-top:25px; border-left: 5px solid #004d40;">
+    <h3 style="color: #764ba2;">🔍 ২য় অধ্যায়ের স্পেশাল নোট (এক নজরে)</h3>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>টপিক</th>
+                    <th>পরীক্ষার জন্য গুরুত্বপূর্ণ তথ্য</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>হাইড্রার নেমাটোসিস্ট</b></td>
+                    <td>সবচেয়ে বড় ও বিষাক্ত নেমাটোসিস্ট হলো <b>স্টেনোটিল</b> (Penetrant)। এটি হিপনোটক্সিন বিষ বহন করে।</td>
+                </tr>
+                <tr>
+                    <td><b>হাইড্রার চলন</b></td>
+                    <td>দ্রুত চলনের জন্য <b>সমারসল্টিং</b> (ডিগবাজি) এবং দীর্ঘ পথ চলার জন্য <b>লুপিং</b> ব্যবহার করে।</td>
+                </tr>
+                <tr>
+                    <td><b>হাইড্রার প্রজনন</b></td>
+                    <td>অযৌন প্রজনন হয় <b>মুকুলোদগম</b> ও <b>বিভাজন</b> (Regeneration) প্রক্রিয়ায়।</td>
+                </tr>
+
+                <tr>
+                    <td><b>ঘাসফড়িংয়ের রক্ত</b></td>
+                    <td>এর রক্তকে <b>হিমোলিম্ফ</b> বলে। এতে কোনো শ্বাসরঞ্জক (হিমোগ্লোবিন) থাকে না।</td>
+                </tr>
+                <tr>
+                    <td><b>মুখোপাঙ্গের অংশ</b></td>
+                    <td>ল্যাব্রাম (ওপরের ঠোঁট), ম্যান্ডিবল (চোয়াল), ম্যাক্সিলা, ল্যাবিয়াম (নিচের ঠোঁট) ও হাইপোফ্যারিংক্স।</td>
+                </tr>
+                <tr>
+                    <td><b>দর্শন একক</b></td>
+                    <td>পুঞ্জাক্ষির গাঠনিক ও কার্যকরী একক হলো <b>ওমাটিডিয়াম</b> (Ommatidium)।</td>
+                </tr>
+                <tr>
+                    <td><b>রূপান্তর</b></td>
+                    <td>ঘাসফড়িংয়ের রূপান্তর <b>অসম্পূর্ণ</b> (Incomplete/Paurometabolous)। এর শিশু অবস্থাকে <b>নিম্ফ</b> বলে।</td>
+                </tr>
+
+                <tr>
+                    <td><b>হৃদপিণ্ডের গঠন</b></td>
+                    <td>রুই মাছের হৃদপিণ্ডকে <b>ভেনাস হার্ট</b> বলে, কারণ এটি শুধু কার্বন-ডাইঅক্সাইড যুক্ত  রক্ত পরিবহন করে। প্রকোষ্ঠ ২টি (১টি অলিন্দ ও ১টি নিলয়)।</td>
+                </tr>
+                <tr>
+                    <td><b>রক্ত সংবহন</b></td>
+                    <td>একচক্রী (Single Circuit) রক্ত সংবহন দেখা যায়।</td>
+                </tr>
+                <tr>
+                    <td><b>গ্যাস গ্রন্থি</b></td>
+                    <td>বায়ুথলি বা পটকার সম্মুখ প্রকোষ্ঠে <b>রেড গ্ল্যান্ড</b> থাকে যা গ্যাস উৎপন্ন করে।</td>
+                </tr>
+                <tr>
+                    <td><b>আইঁশের প্রকার</b></td>
+                    <td>রুই মাছের আইঁশ <b>সাইক্লয়েড</b> (Cycloid) প্রকৃতির। এতে বৃদ্ধির রেখা বা 'অ্যানুলাস' দেখে বয়স বোঝা যায়।</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+<br>
+<button class="btn" onclick="show('p2')">⬅ Back</button>
+</div>
+</div>
+<div id="ch3" style="display:none">
+<div class="card">
+    <h3>২য় পত্র - ৩য় অধ্যায়: পরিপাক ও শোষণ</h3>
+    <input type="text" id="search3" placeholder="🔍 এনজাইম বা তথ্য খুঁজুন..." onkeyup="searchTable3()">
+
+    <div class="table-container">
+        <table id="table3">
+            <thead>
+                <tr>
+                    <th>অঙ্গ/উৎস</th>
+                    <th>এনজাইম/রস</th>
+                    <th>খাদ্যের ধরন</th>
+                    <th>কাজ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>লালা গ্রন্থি</td><td>টায়ালিন</td><td>শর্করা</td><td>স্টার্চকে মলটোজে পরিণত করে।</td></tr>
+                <tr><td>লালা গ্রন্থি</td><td>মলটেজ</td><td>শর্করা</td><td>মলটোজকে গ্লুকোজে পরিণত করে।</td></tr>
+                <tr><td>পাকস্থলী</td><td>পেপসিন</td><td>আমিষ</td><td>আমিষকে প্রোটিওজ ও পেপটনে ভাঙে।</td></tr>
+                <tr><td>পাকস্থলী</td><td>রেনিন</td><td>দুধ</td><td>দুধের কেসিনকে প্যারাক্যাসিনে জমাট বাঁধে।</td></tr>
+                <tr><td>পাকস্থলী</td><td>HCl (এসিড)</td><td>-</td><td>জীবাণু মারে ও পেপসিনকে সক্রিয় করে।</td></tr>
+                <tr><td>যকৃৎ</td><td>পিত্তরস</td><td>স্নেহ (Fat)</td><td>চর্বিকে ইমালসিফিকেশন (ক্ষুদ্র দানা) করে।</td></tr>
+                <tr><td>অগ্ন্যাশয়</td><td>ট্রিপসিন</td><td>আমিষ</td><td>পলিপেপটাইড তৈরি করে।</td></tr>
+                <tr><td>অগ্ন্যাশয়</td><td>লাইপেজ</td><td>স্নেহ</td><td>চর্বিকে ফ্যাটি এসিড ও গ্লিসারলে ভাঙে।</td></tr>
+                <tr><td>অগ্ন্যাশয়</td><td>অ্যামাইলেজ</td><td>শর্করা</td><td>স্টার্চকে মলটোজে রূপান্তর করে।</td></tr>
+                <tr><td>ক্ষুদ্রান্ত্র</td><td>ল্যাকটেজ</td><td>দুগ্ধ শর্করা</td><td>গ্লুকোজ ও গ্যালাকটোজ তৈরি করে।</td></tr>
+                <tr><td>ক্ষুদ্রান্ত্র</td><td>সুক্রেজ</td><td>শর্করা</td><td>গ্লুকোজ ও ফ্রুক্টোজ তৈরি করে।</td></tr>
+                <tr><td>ক্ষুদ্রান্ত্র</td><td>এন্টারোকাইনেজ</td><td>-</td><td>ট্রিপসিনোজেনকে সক্রিয় করে।</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card" style="margin-top:20px; border-left: 5px solid #27ae60;">
+        <h4 style="color: #27ae60;">🧪 পরিপাক নিয়ন্ত্রণকারী প্রধান হরমোন</h4>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>হরমোনের নাম</th>
+                        <th>উৎস</th>
+                        <th>প্রধান কাজ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><b>গ্যাস্ট্রিন</b></td><td>পাকস্থলী</td><td>গ্যাস্ট্রিক রস ও HCl ক্ষরণ উদ্দীপিত করে।</td></tr>
+                    <tr><td><b>সিক্রেটিন</b></td><td>ক্ষুদ্রান্ত্র</td><td>অগ্ন্যাশয় ও পিত্তরস ক্ষরণ বাড়ায়।</td></tr>
+                    <tr><td><b>কোলেসিস্টোকাইনিন</b></td><td>ক্ষুদ্রান্ত্র</td><td>পিত্তথলির সংকোচন ঘটায়।</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top:20px; border-top: 3px dashed #d35400;">
+        <h4 style="color: #d35400;">🏥 যকৃতের (Liver) বিশেষ ভূমিকা</h4>
+        <div class="table-container">
+            <table>
+                <tr><td><b>গ্লাইকোজেনেসিস</b></td><td>গ্লুকোজকে গ্লাইকোজেন হিসেবে জমা রাখা।</td></tr>
+                <tr><td><b>ইউরিয়া তৈরি</b></td><td>অ্যামোনিয়া থেকে ইউরিয়া তৈরি (অরনিথিন চক্র)।</td></tr>
+                <tr><td><b>রক্ত জমাট বাঁধা</b></td><td>ফাইব্রিনোজেন ও প্রোথ্রম্বিন তৈরি করে।</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top:20px; border-left: 5px solid #e67e22; background: #fff5eb;">
+        <h4 style="color: #d35400;">📌 পরীক্ষার জন্য বিশেষ নোট</h4>
+        <div class="table-container">
+            <table>
+                <tr><td><b>জৈব রসায়নাগার</b></td><td>মানুষের যকৃৎ-কে বলা হয়।</td></tr>
+                <tr><td><b>দন্ত সংকেত</b></td><td>$I\frac{2}{2} C\frac{1}{1} Pm\frac{2}{2} M\frac{3}{3} \times 2$</td></tr>
+                <tr><td><b>BMI সূত্র</b></td><td>$\frac{\text{ওজন (kg)}}{\text{উচ্চতা (m)}^2}$</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top:20px; background: #f9f9f9;">
+        <h4 style="text-align: center;">⚖️ BMI অনুযায়ী শরীরের অবস্থা</h4>
+        <div class="table-container">
+            <table>
+                <tr style="background: #eee;"><th>BMI মান</th><th>শ্রেণিবিভাগ</th></tr>
+                <tr><td>< ১৮.৫</td><td>ওজন কম</td></tr>
+                <tr style="background: #eaffea;"><td>১৮.৫ - ২৪.৯</td><td>স্বাভাবিক</td></tr>
+                <tr><td>২৫.০ - ২৯.৯</td><td>অতিরিক্ত ওজন</td></tr>
+                <tr><td>> ৩০.০</td><td>স্থূলতা</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <br>
+    <button class="btn" onclick="show('p2')">⬅ Back</button>
+</div>
+</div>
+<div id="ch4" style="display:none">
+<div class="card">
+    <h3>২য় পত্র - ৪র্থ অধ্যায়: রক্ত ও সঞ্চালন</h3>
+    <input type="text" id="search4" placeholder="🔍 রক্ত বা হৃদপিণ্ডের তথ্য খুঁজুন..." onkeyup="searchTable4()">
+
+    <div class="table-container">
+        <table id="table4">
+            <thead>
+                <tr>
+                    <th>রক্তকণিকা</th>
+                    <th>বৈজ্ঞানিক নাম</th>
+                    <th>আয়ু ও সংখ্যা</th>
+                    <th>প্রধান কাজ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>লোহিত কণিকা</td><td class="sci">Erythrocyte</td><td>১২০ দিন (৪০-৫০ লাখ)</td><td>অক্সিজেন পরিবহন করা।</td></tr>
+                <tr><td>শ্বেত কণিকা</td><td class="sci">Leukocyte</td><td>১-১৫ দিন (৫-১১ হাজার)</td><td>ফ্যাগোসাইটোসিস (জীবাণু ধ্বংস)।</td></tr>
+                <tr><td>অণুচক্রিকা</td><td class="sci">Thrombocyte</td><td>৫-৯ দিন (১.৫-৪ লাখ)</td><td>রক্ত জমাট বাঁধতে সাহায্য করা।</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card" style="margin-top:20px; border-left: 5px solid #c0392b;">
+        <h4 style="color: #c0392b;">💓 হৃদপিণ্ডের প্রধান কপাটিকা সমূহ</h4>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>কপাটিকার নাম</th>
+                        <th>অবস্থান</th>
+                        <th>কাজ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><b>ট্রাইকাসপিড</b></td><td>ডান অলিন্দ ও ডান নিলয়</td><td>রক্তকে উল্টো দিকে যেতে বাধা দেয়।</td></tr>
+                    <tr><td><b>বাইকাসপিড (মিট্রাল)</b></td><td>বাম অলিন্দ ও বাম নিলয়</td><td>অক্সিজেনযুক্ত রক্ত একমুখী রাখে।</td></tr>
+                    <tr><td><b>সেমিলুনার</b></td><td>অ্যাওর্টা ও পালমোনারি ধমনী</td><td>অর্ধচন্দ্রাকৃতির কপাটিকা।</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top:20px; background: #fff5f5; border: 1px solid #ffcccc;">
+        <h4 style="color: #b03a2e;">🩸 প্রধান ৪টি রক্ত তঞ্চন ফ্যাক্টর</h4>
+        <p style="font-size: 13px; color: #666;">(সূত্র: <b>ফুল পড়ে টুপ করে</b>)</p>
+        <div class="table-container">
+            <table>
+                <tr><td>১. <b>ফু</b>ল</td><td>ফাইব্রিনোজেন (Fibrinogen)</td></tr>
+                <tr><td>২. <b>প</b>ড়ে</td><td>প্রোথ্রম্বিন (Prothrombin)</td></tr>
+                <tr><td>৩. <b>টু</b>প</td><td>থ্রম্বোপ্লাস্টিন (Thromboplastin)</td></tr>
+                <tr><td>৪. <b>ক</b>রে</td><td>ক্যালসিয়াম আয়ন ($Ca^{2+}$)</td></tr>
+            </table>
+        </div>
+    </div>
+<div class="card" style="margin-top:20px; border-left: 5px solid #2980b9;">
+    <h4 style="color: #2980b9;">🔄 হৃদপিণ্ডে রক্ত সঞ্চালন পথ</h4>
+    <div style="background: #eef2f7; padding: 15px; border-radius: 8px; font-size: 14px;">
+        <b>ডান অলিন্দ</b> (CO₂) → ট্রাইকাসপিড কপাটিকা → <b>ডান নিলয়</b> → পালমোনারি ধমনী → <b>ফুসফুস</b> (O₂ যুক্ত হয়) → পালমোনারি শিরা → <b>বাম অলিন্দ</b> → বাইকাসপিড কপাটিকা → <b>বাম নিলয়</b> → মহাধমনী (Aorta) → <b>সারা দেহ</b>।
+    </div>
+</div>
+<div class="card" style="margin-top:20px;">
+    <h4>🩸 রক্তের গ্রুপ ও অ্যান্টিজেন</h4>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>গ্রুপ</th>
+                    <th>অ্যান্টিজেন</th>
+                    <th>অ্যান্টিবডি</th>
+                    <th>কাকে রক্ত দিতে পারবে</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><b>A</b></td><td>A</td><td>anti-b</td><td>A, AB</td></tr>
+                <tr><td><b>B</b></td><td>B</td><td>anti-a</td><td>B, AB</td></tr>
+                <tr><td><b>AB</b></td><td>A, B</td><td>নেই</td><td>শুধু AB (সর্বজনীন গ্রহীতা)</td></tr>
+                <tr><td><b>O</b></td><td>নেই</td><td>anti-a, b</td><td>সবাইকে (সর্বজনীন দাতা)</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+    <div class="card" style="margin-top:20px; border-top: 3px solid #764ba2;">
+        <h4 style="color: #764ba2;">📌 এক নজরে গুরুত্বপূর্ণ তথ্য</h4>
+        <div class="table-container">
+            <table style="background: transparent;">
+                <tr><td><b>রক্তের pH</b></td><td>৭.৩৫ - ৭.৪৫ (গড়ে <b>৭.৪</b>)</td></tr>
+                <tr><td><b>রক্তের তাপমাত্রা</b></td><td>৩৬ - ৩৮ ডিগ্রি সেলসিয়াস।</td></tr>
+                <tr><td><b>পেসমেকার</b></td><td>প্রাকৃতিক পেসমেকার হলো <b>SA Node</b>।</td></tr>
+                <tr><td><b>রক্তচাপ (BP)</b></td><td>স্বাভাবিক চাপ <b>১২০/৮০</b> mmHg।</td></tr>
+                <tr><td><b>হৃদপিণ্ডের আবরণ</b></td><td><b>পেরিকার্ডিয়াম</b> (Pericardium)।</td></tr>
+                <tr><td><b>রক্তের গ্রুপ</b></td><td>সর্বজনীন দাতা <b>O-</b>, গ্রহীতা <b>AB+</b>।</td></tr>
+            </table>
+        </div>
+    </div>
+    <div class="card" style="margin-top:20px; border-left: 5px solid #e67e22;">
+    <h4 style="color: #d35400;">⏱️ রক্তচাপ ও পালস রেট</h4>
+    <div class="table-container">
+        <table>
+            <tr><td><b>সিস্টোলিক চাপ</b></td><td>১১০ - ১২০ mmHg</td></tr>
+            <tr><td><b>ডায়াস্টোলিক চাপ</b></td><td>৭০ - ৮০ mmHg</td></tr>
+            <tr><td><b>স্বাভাবিক রক্তচাপ</b></td><td><b>১২০/৮০</b> mmHg</td></tr>
+            <tr><td><b>পালস রেট</b></td><td>গড়ে <b>৭২</b> বার/মিনিট</td></tr>
+        </table>
+    </div>
+</div>
+<div class="card" style="text-align: center; background: #fff; padding: 20px;">
+    <h3>💓 হৃদপিণ্ডের লম্বচ্ছেদ (Internal Structure)</h3>
+    
+    <svg width="300" height="300" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+        <path d="M200,350 C100,300 50,200 80,100 C100,50 180,50 200,120 C220,50 300,50 320,100 C350,200 300,300 200,350 Z" fill="#f1948a" stroke="#c0392b" stroke-width="5"/>
+        
+        <path d="M200,120 C220,50 300,50 320,100 C350,200 300,300 200,350 L200,120" fill="#e74c3c" opacity="0.8"/>
+        
+        <path d="M200,120 C180,50 100,50 80,100 C50,200 100,300 200,350 L200,120" fill="#3498db" opacity="0.8"/>
+
+        <line x1="200" y1="120" x2="200" y2="350" stroke="#fff" stroke-width="4" stroke-dasharray="5,5"/>
+
+        <text x="100" y="160" font-size="14" font-weight="bold" fill="white">ডান অলিন্দ</text>
+        <text x="240" y="160" font-size="14" font-weight="bold" fill="white">বাম অলিন্দ</text>
+        <text x="100" y="260" font-size="14" font-weight="bold" fill="white">ডান নিলয়</text>
+        <text x="240" y="260" font-size="14" font-weight="bold" fill="white">বাম নিলয়</text>
+
+        <circle cx="150" cy="200" r="8" fill="white" stroke="#333" /> <circle cx="250" cy="200" r="8" fill="white" stroke="#333" /> <path d="M200,120 Q200,40 250,20" fill="none" stroke="#c0392b" stroke-width="15" stroke-linecap="round"/>
+        <path d="M200,120 Q200,40 150,20" fill="none" stroke="#2980b9" stroke-width="15" stroke-linecap="round"/>
+    </svg>
+
+    <div style="text-align: left; margin-top: 15px; font-size: 14px;">
+        <p>🔴 <b>লাল অংশ:</b> অক্সিজেনযুক্ত রক্ত ($O_2$) বহন করে।</p>
+        <p>🔵 <b>নীল অংশ:</b> কার্বন ডাই-অক্সাইডযুক্ত রক্ত ($CO_2$) বহন করে।</p>
+    </div>
+</div>
+
+    <br>
+    <button class="btn" onclick="show('p2')">⬅ Back</button>
+</div>
+</div>
+<div id="ch5" style="display:none">
+<div class="card">
+    <h3>২য় পত্র - ৫ম অধ্যায়: শ্বসন ও শ্বাসক্রিয়া</h3>
+    <input type="text" id="search5" placeholder="🔍 শ্বসনতন্ত্রের তথ্য খুঁজুন..." onkeyup="searchTable5()">
+
+    <div class="card" style="border-left: 5px solid #27ae60;">
+        <h4 style="color: #27ae60;">🫁 শ্বসনতন্ত্রের প্রধান অঙ্গসমূহ</h4>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>অঙ্গ</th>
+                        <th>বিশেষ তথ্য</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><b>নাসিকারন্ধ্র</b></td><td>বাতাস প্রবেশ ও ছাঁকন প্রক্রিয়া।</td></tr>
+                    <tr><td><b>ষড়যন্ত্র (Larynx)</b></td><td>একে 'ভয়েস বক্স' বলা হয় (স্বর তৈরি করে)।</td></tr>
+                    <tr><td><b>ট্রাকিয়া</b></td><td>১৬-২০টি তরুণাস্থি নির্মিত বলয় থাকে।</td></tr>
+                    <tr><td><b>অ্যালভিওলাস</b></td><td>ফুসফুসের গাঠনিক ও কার্যকরী একক।</td></tr>
+                    <tr><td><b>প্লুরা (Pleura)</b></td><td>ফুসফুসের দ্বিস্তরী পাতলা আবরণ।</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top:20px; border-top: 3px solid #3498db;">
+        <h4 style="color: #2980b9;">🔄 গ্যাসীয় পরিবহন (ভেরি ইম্পর্ট্যান্ট)</h4>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>গ্যাস</th>
+                        <th>পরিবহন মাধ্যম</th>
+                        <th>শতকরা হার</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td rowspan="2"><b>অক্সিজেন (O₂)</b></td><td>অক্সিহিমোগ্লোবিন রূপে</td><td>৯৮%</td></tr>
+                    <tr><td>ভৌত দ্রবণ হিসেবে</td><td>২%</td></tr>
+                    <tr><td rowspan="3"><b>কার্বন ডাই-অক্সাইড (CO₂)</b></td><td>বাইকার্বনেট হিসেবে</td><td>৬৫%</td></tr>
+                    <tr><td>কার্বামিনো যৌগ হিসেবে</td><td>২৭%</td></tr>
+                    <tr><td>ভৌত দ্রবণ হিসেবে</td><td>৮%</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top:20px; background: #fff5f0; border: 1px solid #ffccbc;">
+        <h4 style="color: #e64a19;">⚠️ শ্বসনতন্ত্রের রোগ ও প্রতিকার</h4>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>রোগের নাম</th>
+                        <th>কারণ / লক্ষণ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><b>সাইনুসাইটিস</b></td><td>ভাইরাস বা ব্যাকটেরিয়ার আক্রমণে সাইনাসে প্রদাহ।</td></tr>
+                    <tr><td><b>ওটিটিস মিডিয়া</b></td><td>মধ্যকর্ণে সংক্রমণ (শিশুদের বেশি হয়)।</td></tr>
+                    <tr><td><b>অ্যাসবেসটোসিস</b></td><td>অ্যাসবেসটস কারখানার ধূলিকণা ফুসফুসে জমে।</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top:20px; border-left: 5px solid #764ba2;">
+        <h4 style="color: #764ba2;">📌 ছোট কিন্তু জরুরি তথ্য</h4>
+        <ul style="font-size: 14px; line-height: 1.8;">
+            <li><b>সারফ্যাকট্যান্ট:</b> অ্যালভিওলাসের প্রাচীরে থাকে যা ফুসফুসকে চুপসে যেতে দেয় না।</li>
+            <li><b>অ্যাডামস অ্যাপেল:</b> পুরুষের ল্যারিংস-এর থাইরয়েড তরুণাস্থি যা বাইরে থেকে উঁচু দেখায়।</li>
+            <li><b>টাইডাল ভলিউম:</b> স্বাভাবিক শ্বাসকার্যে বাতাসের পরিমাণ হলো ৫০০ মিলি।</li>
+        </ul>
+    </div>
+<div class="card" style="margin-top:20px; border-left: 5px solid #2980b9;">
+    <h4 style="color: #2980b9;">🌬️ শ্বাসক্রিয়া: প্রশ্বাস ও নিঃশ্বাস</h4>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>বৈশিষ্ট্য</th>
+                    <th>প্রশ্বাস (Inspiration)</th>
+                    <th>নিঃশ্বাস (Expiration)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><b>ডায়াফ্রাম</b></td><td>সংকুচিত ও নিচে নামে।</td><td>প্রসারিত ও উপরে ওঠে।</td></tr>
+                <tr><td><b>বক্ষগহ্বর</b></td><td>আয়তন বাড়ে।</td><td>আয়তন কমে।</td></tr>
+                <tr><td><b>ফুসফুসের চাপ</b></td><td>বায়ুমণ্ডলীয় চাপের চেয়ে কম।</td><td>বায়ুমণ্ডলীয় চাপের চেয়ে বেশি।</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="card" style="margin-top:20px; background: #f0f4f8; border: 1px dashed #34495e;">
+    <h4 style="color: #2c3e50;">🧪 গ্যাসীয় পরিবহনের বিক্রিয়া</h4>
+    <div style="font-family: 'Courier New', Courier, monospace; padding: 10px; background: #fff; border-radius: 5px;">
+        <b>১. বাইকার্বনেট গঠন:</b><br>
+        $$CO_2 + H_2O \xrightarrow{\text{Carb. Anhydrase}} H_2CO_3 \rightarrow H^+ + HCO_3^-$$
+        <br>
+        <b>২. অক্সিহিমোগ্লোবিন গঠন:</b><br>
+        $$Hb + 4O_2 \rightarrow Hb(O_2)_4$$
+    </div>
+    <p style="font-size: 13px; margin-top:10px;">*এখানে <b>Carb. Anhydrase</b> এনজাইমটি সবচেয়ে দ্রুত কাজ করে।</p>
+</div>
+    <br>
+    <button class="btn" onclick="show('p2')">⬅ Back</button>
+</div>
+</div>
+<div id="ch6" style="display:none">
+<div class="card">
+    <h3>২য় পত্র - ৬ষ্ঠ অধ্যায়: বর্জ্য ও নিষ্কাশন</h3>
+    <input type="text" id="search6" placeholder="🔍 রেচনতন্ত্রের তথ্য খুঁজুন..." onkeyup="searchTable6()">
+<div class="card" style="margin-top:20px; border-top: 4px solid #8e44ad;">
+    <h4 style="text-align: center; color: #8e44ad;">🧪 মূত্রের উপাদান ও শতকরা হার</h4>
+    
+    <div class="table-container">
+        <h5 style="background: #f1f0ff; padding: 8px; border-radius: 5px; color: #5e35b1;">১. অজৈব উপাদান (Inorganic)</h5>
+        <table>
+            <thead>
+                <tr>
+                    <th>উপাদান</th>
+                    <th>শতকরা হার (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><b>পানি</b></td><td><b>৯৫%</b></td></tr>
+                <tr><td>সোডিয়াম ক্লোরাইড ($NaCl$)</td><td>০.৬০%</td></tr>
+                <tr><td>পটাশিয়াম ক্লোরাইড ($KCl$)</td><td>০.১৫%</td></tr>
+                <tr><td>সালফেট ও ফসফেট</td><td>০.১৮%</td></tr>
+                <tr><td>অন্যান্য (ক্যালসিয়াম, ম্যাগনেসিয়াম)</td><td>০.০৭%</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <br>
+
+    <div class="table-container">
+        <h5 style="background: #fff0f0; padding: 8px; border-radius: 5px; color: #c62828;">২. জৈব উপাদান (Organic)</h5>
+        <table>
+            <thead>
+                <tr>
+                    <th>উপাদান</th>
+                    <th>শতকরা হার (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><b>ইউরিয়া</b></td><td><b>২.০০%</b></td></tr>
+                <tr><td>ইউরিক এসিড</td><td>০.০৫%</td></tr>
+                <tr><td>ক্রিয়েটিনিন</td><td>০.০৭%</td></tr>
+                <tr><td>অ্যামোনিয়া</td><td>০.০৪%</td></tr>
+                <tr><td>হিপ্পুরিক এসিড ও অন্যান্য</td><td>০.০৪%</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card" style="margin-top:15px; background: #e8f5e9; border: 1px dashed #2e7d32;">
+        <p style="font-size: 14px; margin: 0;">
+            <b>💡 পরীক্ষার টিপস:</b> মূত্রের <b>৯৫% পানি</b> এবং বাকি <b>৫% কঠিন বস্তু</b>। এই ৫% কঠিন বস্তুর মধ্যে প্রায় অর্ধেকই (অর্থাৎ ২%) হলো <b>ইউরিয়া</b>।
+        </p>
+    </div>
+</div>
+    <div class="card" style="border-left: 5px solid #d35400;">
+        <h4 style="color: #d35400;">🧪 রেচন ও গুরুত্বপূর্ণ হরমোন</h4>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>টপিক</th>
+                        <th>গুরুত্বপূর্ণ তথ্য</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><b>প্রধান রেচন অঙ্গ</b></td><td>বৃক্ক বা কিডনি (Kidney)।</td></tr>
+                    <tr><td><b>প্রধান রেচন বর্জ্য</b></td><td>ইউরিয়া (যকৃতে তৈরি হয়)।</td></tr>
+                    <tr><td><b>ADH হরমোন</b></td><td>মূত্রে পানির পরিমাণ নিয়ন্ত্রণ করে (Osmoregulation)।</td></tr>
+                    <tr><td><b>অ্যালডোস্টেরন</b></td><td>সোডিয়াম ($Na^+$) ও পটাশিয়াম ($K^+$) এর মাত্রা নিয়ন্ত্রণ করে।</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top:20px; border-top: 3px solid #27ae60;">
+        <h4 style="color: #27ae60;">🧬 নেফ্রন: বৃক্কের একক</h4>
+        <p style="font-size: 14px;">একটি বৃক্কে প্রায় <b>১০-১২ লাখ</b> নেফ্রন থাকে। এর প্রধান অংশ ২টি:</p>
+        <div class="table-container">
+            <table>
+                <tr><td><b>রেনাল করপাসল</b></td><td>গ্লোমেরুলাস ও বোম্যান্স ক্যাপসুল (ছাঁকন কাজ করে)।</td></tr>
+                <tr><td><b>রেনাল টিউবিউল</b></td><td>প্রক্সিমাল, হেনলির লুপ ও ডিস্টাল নালিকা।</td></tr>
+            </table>
+        </div>
+    </div>
+    
+    
+
+    <div class="card" style="margin-top:20px; background: #fdfefe; border: 1px solid #7f8c8d;">
+        <h4 style="color: #2c3e50;">💧 মূত্র তৈরির ৩টি ধাপ</h4>
+        <ol style="font-size: 14px; line-height: 1.8;">
+            <li><b>আল্ট্রাফিল্ট্রেশন:</b> গ্লোমেরুলাসে রক্ত ছাঁকা হয়।</li>
+            <li><b>নির্বাচনমূলক পুনঃশোষণ:</b> দরকারি বস্তু (গ্লুকোজ, পানি) রক্তে ফিরে যায়।</li>
+            <li><b>সক্রিয় ক্ষরণ:</b> ক্ষতিকর পদার্থ নালিকায় যুক্ত হয়।</li>
+        </ol>
+    </div>
+
+    <div class="card" style="margin-top:20px; border-left: 5px solid #c0392b;">
+        <h4 style="color: #c0392b;">🏥 বৃক্কের সমস্যা ও সমাধান</h4>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>বিষয়</th>
+                        <th>তথ্য</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><b>হিমোডায়ালাইসিস</b></td><td>মেশিনের সাহায্যে রক্ত পরিষ্কার করা।</td></tr>
+                    <tr><td><b>পেরিটোনিয়াল ডায়ালাইসিস</b></td><td>পেটের ঝিল্লির মাধ্যমে রক্ত ছাঁকা।</td></tr>
+                    <tr><td><b>বৃক্ক পাথর</b></td><td>ক্যালসিয়াম অক্সালেট বা ইউরিক এসিডের জমাট রূপ।</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="card" style="margin-top:20px; border: 2px solid #f1c40f; background: #fffdf0;">
+    <h4 style="color: #9b59b6;">🎯 MCQ এর জন্য সুপার ইম্পর্ট্যান্ট (Must Know)</h4>
+    <div class="table-container">
+        <table>
+            <tr style="background: #f9f9f9;">
+                <th>টপিক</th>
+                <th>MCQ তথ্য</th>
+            </tr>
+            <tr>
+                <td><b>বৃক্কের অবস্থান</b></td>
+                <td>টি-১২ (T12) থেকে এল-৩ (L3) কশেরুকা পর্যন্ত।</td>
+            </tr>
+            <tr>
+                <td><b>কিডনির ওজন</b></td>
+                <td>পুরুষে ১৫০-১৭০ গ্রাম, স্ত্রীতে ১৩০-১৫০ গ্রাম।</td>
+            </tr>
+            <tr>
+                <td><b>রক্ত প্রবাহ</b></td>
+                <td>প্রতি মিনিটে কিডনিতে <b>১২০০ মিলি</b> রক্ত প্রবাহিত হয়।</td>
+            </tr>
+            <tr>
+                <td><b>GFR রেট</b></td>
+                <td>প্রতি মিনিটে ১২৫ মিলি (সুস্থ মানুষের জন্য)।</td>
+            </tr>
+            <tr>
+                <td><b>মূত্রের উপাদান</b></td>
+                <td>পানি ৯৫%, ইউরিয়া ২%, ইউরিক এসিড ০.০৫%।</td>
+            </tr>
+            <tr>
+                <td><b>অরনিথিন চক্র</b></td>
+                <td>যকৃতে (Liver) ঘটে, ইউরিয়া তৈরি হয়।</td>
+            </tr>
+            <tr>
+                <td><b>কিডনি নষ্টের লক্ষণ</b></td>
+                <td>রক্তে <b>ক্রিয়েটিনিন (Creatinine)</b> এর মাত্রা বেড়ে যাওয়া।</td>
+            </tr>
+        </table>
+    </div>
+</div>
+    <div class="card" style="margin-top:20px; background: #fffde7; border-radius: 10px;">
+        <h4 style="color: #fbc02d;">📌 মনে রেখো (MCQ স্পেশাল)</h4>
+        <ul style="font-size: 14px;">
+            <li><b>হাইলাম:</b> বৃক্কের অবতল অংশের ভাঁজ যেখান দিয়ে ইউরেটার বের হয়।</li>
+            <li><b>ইউরোক্রোম:</b> এই রঞ্জকের কারণে মূত্রের রঙ খড় বা হালকা হলুদ হয়।</li>
+            <li><b>অরনিথিন চক্র:</b> যে চক্রের মাধ্যমে যকৃতে অ্যামোনিয়া থেকে ইউরিয়া তৈরি হয়।</li>
+        </ul>
+    </div>
+
+    <br>
+    <button class="btn" onclick="show('p2')">⬅ Back</button>
+</div>
+</div>
+<div id="ch7" style="display:none">
+<div class="card">
+    <h3>২য় পত্র - ৭ম অধ্যায়: চলন ও অঙ্গচালনা</h3>
+    
+    <div class="card" style="border-left: 5px solid #16a085;">
+        <h4 style="color: #16a085;">🦴 কঙ্কালতন্ত্রের প্রধান সংখ্যাসমূহ</h4>
+        <div class="table-container">
+            <table>
+                <tr><td><b>মোট হাড় (পূর্ণবয়স্ক)</b></td><td>২০৬টি</td></tr>
+                <tr><td><b>অক্ষীয় কঙ্কাল</b></td><td>৮০টি</td></tr>
+                <tr><td><b>উপাঙ্গীয় কঙ্কাল</b></td><td>১২৬টি</td></tr>
+                <tr><td><b>করোটিকা (Cranium)</b></td><td>৮টি হাড় (মনে রাখার ছন্দ: STEP OF)</td></tr>
+                <tr><td><b>মুখমণ্ডলীয় অস্থি</b></td><td>১৪টি</td></tr>
+                <tr><td><b>মেরুদণ্ডের কশেরুকা</b></td><td>৩৩টি (ভ্রূণাবস্থায়), ২৬টি (পূর্ণবয়স্ক)</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top:20px; border-top: 3px solid #f39c12;">
+        <h4 style="color: #e67e22;">🧬 কশেরুকার সংখ্যা ও অবস্থান</h4>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr><th>অঞ্চল</th><th>সংখ্যা</th><th>নাম</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>গ্রীবাদেশীয়</td><td>৭টি</td><td>সারভাইকাল</td></tr>
+                    <tr><td>বক্ষদেশীয়</td><td>১২টি</td><td>থোরাসিক</td></tr>
+                    <tr><td>কটিদেশীয়</td><td>৫টি</td><td>লাম্বার</td></tr>
+                    <tr><td>শ্রোণীদেশীয়</td><td>১টি (৫টি মিলে)</td><td>স্যাক্রাম</td></tr>
+                    <tr><td>পুচ্ছদেশীয়</td><td>১টি (৪টি মিলে)</td><td>কক্সিস</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top:20px; background: #fdf2e9; border: 1px solid #fab1a0;">
+        <h4 style="color: #d35400;">⚖️ অস্থি বনাম তরুণাস্থি</h4>
+        <ul style="font-size: 14px;">
+            <li><b>অস্থি:</b> কোষ হলো ওস্টিওব্লাস্ট, ম্যাট্রিক্স শক্ত (ক্যালসিয়াম থাকে)।</li>
+            <li><b>তরুণাস্থি:</b> কোষ হলো কনড্রোব্লাস্ট, ম্যাট্রিক্স নমনীয় (কনড্রিন থাকে)।</li>
+        </ul>
+    </div>
+
+    <div class="card" style="margin-top:20px; border-left: 5px solid #2980b9;">
+        <h4 style="color: #2980b9;">💪 পেশি ও হাড়ের চলন</h4>
+        <div class="table-container">
+            <table>
+                <tr><td><b>সাইনোভিয়াল সন্ধি</b></td><td>হাড়ের নড়াচড়ায় সাহায্য করে।</td></tr>
+                <tr><td><b>লিভার ১ম শ্রেণি</b></td><td>মাথা ও ঘাড়ের সন্ধি।</td></tr>
+                <tr><td><b>লিভার ২য় শ্রেণি</b></td><td>পায়ের আঙুলের ওপর ভর দিয়ে দাঁড়ানো।</td></tr>
+                <tr><td><b>লিভার ৩য় শ্রেণি</b></td><td>কনুই বাঁকানো (মানুষের শরীরে সবচেয়ে বেশি)।</td></tr>
+            </table>
+        </div>
+    </div>
+
+    <br>
+    <button class="btn" onclick="show('p2')">⬅ Back</button>
+</div>
+</div>
+<footer style="background: #004d40; color: white; padding: 50px 20px; margin-top: 50px; font-family: sans-serif;">
+    <div style="max-width: 1200px; margin: auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; align-items: start;">
+        
+        <div style="padding-right: 20px;">
+            <div style="margin-bottom: 25px;">
+                <h3 style="border-bottom: 3px solid #ff9800; padding-bottom: 10px; display: inline-block; color: white; font-size: 20px;">Contact Address</h3>
+                <p style="margin-top: 15px; font-size: 16px; line-height: 1.8; color: #f4f4f4;">
+                    📍 <b>Puranghat College</b><br>
+                    Tahirpur, Sunamganj<br>
+                    Sylhet, Bangladesh
+                </p>
+            </div>
+            
+            <div style="margin-top: 25px;">
+                <h3 style="border-bottom: 3px solid #ff9800; padding-bottom: 10px; display: inline-block; color: white; font-size: 20px;">Quick Contact</h3>
+                <p style="margin-top: 15px; font-size: 16px; line-height: 1.8;">
+                    📧 Email: <a href="mailto:info@puranghatcollege.edu.bd" style="color: #ff9800; text-decoration: none;">info@puranghatcollege.edu.bd</a><br>
+                    📞 Phone: +880 1771699506
+                </p>
+                <div style="margin-top: 20px;">
+                    <a href="https://www.facebook.com/puranghatcollages523" target="_blank" style="background: #1877F2; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-size: 14px; font-weight: bold; display: inline-flex; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: background 0.3s;">
+                        <svg viewBox="0 0 24 24" style="width: 18px; height: 18px; fill: white; margin-right: 8px;">
+                            <path d="M22.675 0h-21.35C.596 0 0 .596 0 1.325v21.351C0 23.404.596 24 1.325 24h11.495v-9.294H9.691V11.11h3.129V8.56c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.596h-3.12V24h6.116c.73 0 1.325-.596 1.325-1.325V1.325C24 .596 23.404 0 22.675 0z"/>
+                        </svg>
+                        Follow Us on Facebook
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <h3 style="border-bottom: 3px solid #ff9800; padding-bottom: 10px; display: inline-block; color: white; font-size: 20px; margin-bottom: 15px;">Locate Us</h3>
+                <div style="width: 100%; height: 350px; border-radius: 12px; overflow: hidden; border: 4px solid #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.15);">
+                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d115933.2033620892!2d91.1394541740924!3d25.039659069353224!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x37512d7c57f90371%3A0x6b83f3e691b00100!2sTahirpur!5e0!3m2!1sen!2sbd!4v1700000000000!5m2!1sen!2sbd" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+            <p style="text-align: center; margin-top: 10px; font-size: 14px; color: #ccc;">📍 Tahirpur Center, Sunamganj</p>
+        </div>
+
+    </div>
+
+    <div style="text-align: center; margin-top: 50px; padding-top: 25px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 13px; opacity: 0.8; letter-spacing: 0.5px;">
+        &copy; 2026 <a href="https://puranghatcollege.github.io/puranghatcollege/home.html"><b>Puranghat College</b></a> | Tahirpur, Sunamganj | Developed by <b>Shuvo</b>
+    </div>
+</footer>
+<script>
+// সেকশন পরিবর্তন করার ফাংশন
+function show(id){
+    // সব আইডি এখানে লিস্ট করা আছে
+    const sections = ['home', 'p1', 'p2', 'ch1', 'ch2', 'ch3','ch4','ch5','ch6','ch7'];
+    sections.forEach(s => {
+        const el = document.getElementById(s);
+        if(el) el.style.display = 'none';
+    });
+    
+    // নির্দিষ্ট সেকশনটি দেখাবে
+    const target = document.getElementById(id);
+    if(target) target.style.display = 'block';
+    
+    // স্ক্রল করে উপরে নিয়ে যাওয়ার জন্য
+    window.scrollTo(0, 0);
+}
+
+// ডার্ক মোড টগল
+function toggleDark(){
+    document.body.classList.toggle("dark");
+}
+
+// ১ম অধ্যায় সার্চ
+function searchTable(){
+    let input = document.getElementById("search").value.toLowerCase();
+    document.querySelectorAll("#table tbody tr").forEach(r => {
+        r.style.display = r.innerText.toLowerCase().includes(input) ? "" : "none";
+    });
+}
+
+// ২য় অধ্যায় সার্চ
+function searchTable2(){
+    let input = document.getElementById("search2").value.toLowerCase();
+    document.querySelectorAll("#table2 tbody tr").forEach(r => {
+        r.style.display = r.innerText.toLowerCase().includes(input) ? "" : "none";
+    });
+}
+
+// ৩য় অধ্যায় সার্চ
+function searchTable3(){
+    let input = document.getElementById("search3").value.toLowerCase();
+    document.querySelectorAll("#table3 tbody tr").forEach(r => {
+        r.style.display = r.innerText.toLowerCase().includes(input) ? "" : "none";
+    });
+}
+// ৪র্থ অধ্যায় সার্চ ফাংশন
+function searchTable4(){
+    let input = document.getElementById("search4").value.toLowerCase();
+    document.querySelectorAll("#table4 tbody tr").forEach(r => {
+        r.style.display = r.innerText.toLowerCase().includes(input) ? "" : "none";
+    });
+}
+</script>
+</body>
+</html>
